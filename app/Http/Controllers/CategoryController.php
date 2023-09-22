@@ -94,7 +94,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $request->validate();
+        $validData = $request->validate();
     
         $category->update($request->all());
     

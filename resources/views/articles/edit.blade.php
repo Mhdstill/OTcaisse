@@ -26,41 +26,48 @@
                     </div>
                 @endif
 
-                <form action="{{ route('articles.store') }}" method="POST">
+                <form action="{{ route('articles.update', $article->id) }}" method="POST">
                     @csrf
+                    @method('PUT')
 
                     <div class="row">
 
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Titre :</label>
                             <div class="form-group text-black">
-                                <input type="text" name="title" class="form-control w-full" placeholder="Titre">
+                                <input type="text" name="title" value="{{ $article->title }}"
+                                    class="form-control w-full" placeholder="Titre">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Prix :</label>
                             <div class="form-group text-black">
-                                <input type="number" name="price" class="form-control w-full" placeholder="Prix">
+                                <input type="number" name="price" value="{{ $article->price }}"
+                                    class="form-control w-full" placeholder="Prix">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Stock :</label>
                             <div class="form-group text-black">
-                                <input type="number" name="quantity" class="form-control w-full" placeholder="Stock">
+                                <input type="number" name="quantity" value="{{ $article->quantity }}"
+                                    class="form-control w-full" placeholder="Stock">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Alerte stock :</label>
                             <div class="form-group text-black">
-                                <input type="number" name="quantity_alert" class="form-control w-full"
-                                    placeholder="Alerte stock">
+                                <input type="number" name="quantity_alert" value="{{ $article->quantity_alert }}"
+                                    class="form-control w-full" placeholder="Alerte stock">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Catégorie :</label>
                             <select class="text-black" name="category_id">
                                 @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}"
+                                        {{ $category->id == $article->category_id ? 'selected' : '' }}>
+                                        {{ $category->name }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
@@ -71,20 +78,21 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Description :</label>
                             <div class="form-group text-black">
-                                <textarea class="form-control w-full" name="description" placeholder="Description"></textarea>
+                                <textarea class="form-control w-full" name="description" placeholder="Description">{{ $article->description }}</textarea>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Référence :</label>
                             <div class="form-group text-black">
-                                <input type="text" name="reference" class="form-control w-full"
-                                    placeholder="Référence">
+                                <input type="text" name="reference" value="{{ $article->reference }}"
+                                    class="form-control w-full" placeholder="Référence">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Statut :</label>
                             <div class="form-group text-black">
-                                <input type="number" name="status" class="form-control w-full" placeholder="Statut">
+                                <input type="text" name="status" value="{{ $article->status }}"
+                                    class="form-control w-full" placeholder="Statut">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -95,5 +103,4 @@
                 </form>
             </div>
         </div>
-    </div>
 </x-app-layout>

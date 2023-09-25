@@ -20,7 +20,7 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">
+                            {{-- <th scope="col" class="px-6 py-3">
                                 <div class="flex items-center">No
                                     <a href="#"><svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 ml-1"
                                             aria-hidden="true" fill="currentColor" viewBox="0 0 320 512">
@@ -29,7 +29,7 @@
                                         </svg></a>
 
                                 </div>
-                            </th>
+                            </th> --}}
                             <th scope="col" class="px-6 py-3">
                                 <div class="flex items-center">
                                     Titre

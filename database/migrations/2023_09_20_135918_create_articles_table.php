@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->longText('description')->nullable();
             $table->string('reference')->nullable();
-            $table->tinyInteger('status')->default(1);
+            $table->enum('status',['actif','inactif'])->default('actif');
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -22,7 +23,7 @@ class ArticleController extends Controller
             'image'=>'nullable | image | mimes:jpeg,png,jpg,gif,webp,heif,heic,heif-sequence,heic-sequence',
             'description'=>'nullable |string',
             'reference'=>'nullable',
-            'status'=>'required | integer',
+            'status' => 'required| in:actif,inactif',
         ];
     }
 
@@ -36,8 +37,8 @@ class ArticleController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
         $articles = Article::all();
+        $categories = Category::all();
         return view('articles.create', compact('categories','articles'));
 
     }
@@ -45,14 +46,15 @@ class ArticleController extends Controller
     //Stocker une nouvelle ressource
     public function store(Request $request)
     {
-       $validData = $request->validated();
-    //    $validData = $request->validate($this->rules);
+        $validData = $request->validate($this->rules());
+            
+        if ($request->image != null) {
+            $path = Storage::putFileAs('public', $request->image, $validData['title'].'.'.$request->image->extension());
+            $validData["image"] = $path;
+        }
 
-
-       Article::create($validData);
-        return redirect()->route('articles.index')
-            ->with('success','Article créé avec succès !');
-
+        Article::create($validData);
+        return redirect()->route('articles.index')->with('success','Article créé avec succès !');
     }
 
     //Afficher la ressource spécifiée
@@ -71,9 +73,9 @@ class ArticleController extends Controller
     //Mettre à jour la ressource spécifiée dans le stockage
     public function update(Request $request, Article $article)
     {
-        $validData = $request->validate();
+        $validData = $request->validate($this->rules());
 
-        $article->update($validData);
+        $article->update($request->all());
 
         return redirect()->route('articles.index')
             ->with('success','Article mis à jour avec succès !');

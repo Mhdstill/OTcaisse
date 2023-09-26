@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('color', 30)->nullable();
             $table->longText('description')->nullable();
-            $table->tinyInteger('status')->default(1);
+            $table->enum('status',['actif','inactif'])->default('actif');
             $table->timestamps();
         });
     }

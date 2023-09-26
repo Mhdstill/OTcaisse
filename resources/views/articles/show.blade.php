@@ -8,7 +8,7 @@
             </div>
             <div class="row mt-2">
                 <div class="col-lg-12 italic pb-4 text-white">
-                    @if ($message = Session::get('success'))
+                    @if ($message = Session::get('success'))    
                         <div class="alert alert-success">
                             <p>{{ $message }}</p>
                         </div>
@@ -43,7 +43,7 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <div class="form-group">
                                 <label class="font-bold text-lg">Catégorie :</label><br>
-                                {{ $article->category->id }}
+                                {{ $article->category->name }}
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">

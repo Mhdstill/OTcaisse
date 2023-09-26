@@ -1,4 +1,4 @@
-<x-app-layout>
+d<x-app-layout>
     <div class="m-10">
         <div class="pb-8 flex justify-around items-center">
             <h2 class="font-bold text-lg text-white">CRUD Categories - OTcaisse</h2>
@@ -18,25 +18,25 @@
                     <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                         <div class="form-group">
                             <label class="font-bold text-lg">Nom :</label><br>
-                            {{ $category_id->name }}
+                            {{ $category->name }}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                         <div class="form-group">
                             <label class="font-bold text-lg">Couleur :</label><br>
-                            {{ $category_id->color }}
+                          <div class="h-10 w-16" style="background-color: {{ $category->color }}"></div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                         <div class="form-group">
                             <label class="font-bold text-lg">Description :</label><br>
-                            {{ $category_id->description }}
+                            {{ $category->description }}
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                         <div class="form-group">
                             <label class="font-bold text-lg">Statut :</label><br>
-                            {{ $category_id->status }}
+                            {{ $category->status }}
                         </div>
                     </div>
                 </div>

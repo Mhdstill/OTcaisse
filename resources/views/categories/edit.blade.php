@@ -33,26 +33,27 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Nom:</label>
                             <div class="form-group text-black">
-                                <input type="text" name="name" class="form-control w-full" placeholder="Nom">
+                                <input type="text" name="name" class="form-control w-full" value="{{ old('name', $category->name) }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Couleur:</label>
                             <div class="form-group text-black">
-                                <input type="text" name="color" class="form-control w-full" placeholder="Couleur">
+                                <input type="color" name="color" class="form-control w-full" value="{{ old('color', $category->color) }}" style="background-color: {{ $category->color }}>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Description:</label>
                             <div class="form-group text-black">
-                                <input type="text" name="description" class="form-control w-full" placeholder="Description">
+                                <input type="text" name="description" value="{{ old('description', $category->description) }}" class="form-control w-full">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
-                            <label class="font-bold text-lg">Statut:</label>
-                            <div class="form-group text-black">
-                                <input type="text" name="status" class="form-control w-full" placeholder="Statut">
-                            </div>
+                            <label class="font-bold text-lg">Statut :</label>
+                            <select class="text-black" name="status">
+                                <option value="actif">actif</option>
+                                <option value="inactif">inactif</option>
+                            </select>
                         </div>
                                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                 <button type="submit" class="border-4 border-gray-800 bg-white  text-gray-800 rounded-xl p-2">Envoyer</button>

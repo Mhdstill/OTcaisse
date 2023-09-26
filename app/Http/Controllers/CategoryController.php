@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Article;
 use App\Models\Category;
-use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 
 
@@ -14,10 +15,11 @@ class CategoryController extends Controller
     public function rules(): array
     {
         return [
+            // 'name' => 'required |unique:categories,name',
             'name' => 'required',
             'color' => 'nullable |string',
             'description' => 'nullable |string',
-            'status' => 'nullable',
+            'status' => 'required| in:actif,inactif',
         ];
     }
     /**
@@ -37,9 +39,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(): View
+    public function create() 
     {
-        return view('categories.create');
+        $categories = Category::all();
+        $articles = Article::all();
+        return view('categories.create', compact('categories', 'articles'));
     }
 
     /**
@@ -50,12 +54,18 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $validData = $request->validate();
-    
-        Category::create($request->all());
-     
+       $validData = $request->validate([
+        'name' => 'required',
+        'color' => 'nullable',
+        'description' => 'nullable',
+        'status' => 'required| in:actif,inactif'
+        
+    ]);
+            
+       Category::create($validData);
         return redirect()->route('categories.index')
-                        ->with('success','Nouvelle catégorie créée avec succès !');
+            ->with('success','Catégorie créé avec succès !');
+
     }
 
     /**
@@ -94,7 +104,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $validData = $request->validate();
+        $validData = $request->validate($this->rules());
     
         $category->update($request->all());
     

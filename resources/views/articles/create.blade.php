@@ -34,26 +34,26 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Titre :</label>
                             <div class="form-group text-black">
-                                <input type="text" name="title" class="form-control w-full" placeholder="Titre">
+                                <input type="text" name="title" class="form-control w-full" value="{{ old('title') }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Prix :</label>
                             <div class="form-group text-black">
-                                <input type="number" name="price" class="form-control w-full" placeholder="Prix">
+                                <input type="number" min="0" step="0.01" value="0.00" name="price" class="form-control w-full" value="{{ old('price') }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Stock :</label>
                             <div class="form-group text-black">
-                                <input type="number" name="quantity" class="form-control w-full" placeholder="Stock">
+                                <input type="number" name="quantity" class="form-control w-full" value="{{ old('quantity') }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Alerte stock :</label>
                             <div class="form-group text-black">
                                 <input type="number" name="quantity_alert" class="form-control w-full"
-                                    placeholder="Alerte stock">
+                                    value="{{ old('quantity_alert') }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
@@ -71,21 +71,22 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Description :</label>
                             <div class="form-group text-black">
-                                <textarea class="form-control w-full" name="description" placeholder="Description"></textarea>
+                                <textarea class="form-control w-full" name="description" value="{{ old('description') }}"></textarea>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Référence :</label>
                             <div class="form-group text-black">
                                 <input type="text" name="reference" class="form-control w-full"
-                                    placeholder="Référence">
+                                value="{{ old('reference') }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Statut :</label>
-                            <div class="form-group text-black">
-                                <input type="number" name="status" class="form-control w-full" placeholder="Statut">
-                            </div>
+                            <select class="text-black" name="status">
+                                <option value="actif">actif</option>
+                                <option value="inactif">inactif</option>
+                            </select>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="submit"

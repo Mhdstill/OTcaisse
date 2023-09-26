@@ -36,28 +36,27 @@
                             <label class="font-bold text-lg">Titre :</label>
                             <div class="form-group text-black">
                                 <input type="text" name="title" value="{{ $article->title }}"
-                                    class="form-control w-full" placeholder="Titre">
+                                    class="form-control w-full">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Prix :</label>
                             <div class="form-group text-black">
-                                <input type="number" name="price" value="{{ $article->price }}"
-                                    class="form-control w-full" placeholder="Prix">
+                                <input type="number" min="0" step="0.01" name="price" class="form-control w-full" value="{{ old('price', $article->price) }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Stock :</label>
                             <div class="form-group text-black">
                                 <input type="number" name="quantity" value="{{ $article->quantity }}"
-                                    class="form-control w-full" placeholder="Stock">
+                                    class="form-control w-full">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Alerte stock :</label>
                             <div class="form-group text-black">
                                 <input type="number" name="quantity_alert" value="{{ $article->quantity_alert }}"
-                                    class="form-control w-full" placeholder="Alerte stock">
+                                    class="form-control w-full">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
@@ -78,29 +77,29 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Description :</label>
                             <div class="form-group text-black">
-                                <textarea class="form-control w-full" name="description" placeholder="Description">{{ $article->description }}</textarea>
+                                <textarea class="form-control w-full" name="description">{{ $article->description }}</textarea>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Référence :</label>
                             <div class="form-group text-black">
                                 <input type="text" name="reference" value="{{ $article->reference }}"
-                                    class="form-control w-full" placeholder="Référence">
+                                    class="form-control w-full">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Statut :</label>
-                            <div class="form-group text-black">
-                                <input type="text" name="status" value="{{ $article->status }}"
-                                    class="form-control w-full" placeholder="Statut">
-                            </div>
+                            <select class="text-black" name="status">
+                                <option value="actif">actif</option>
+                                <option value="inactif">inactif</option>
+                            </select>
                         </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                            <button type="submit"
-                                class="border-4 border-gray-800 bg-white  text-gray-800 rounded-xl p-3 px-5">Envoyer</button>
-                        </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                        <button type="submit"
+                            class="border-4 border-gray-800 bg-white  text-gray-800 rounded-xl p-3 px-5">Envoyer</button>
                     </div>
-                </form>
             </div>
+            </form>
         </div>
+    </div>
 </x-app-layout>

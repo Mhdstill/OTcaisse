@@ -47,6 +47,13 @@
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
+                            <div class="form-group py-2">
+                                <label class="font-bold text-lg" for="image">Image :</label>
+                                <input type="file" name="image" id="image" class="form-control-file">
+                                {{ $article->image }}
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <div class="form-group">
                                 <label class="font-bold text-lg">Description :</label><br>
                                 {{ $article->description }}

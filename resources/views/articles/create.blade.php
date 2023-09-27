@@ -26,7 +26,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('articles.store') }}" method="POST">
+                <form action="{{ route('articles.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -34,19 +34,22 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Titre :</label>
                             <div class="form-group text-black">
-                                <input type="text" name="title" class="form-control w-full" value="{{ old('title') }}">
+                                <input type="text" name="title" class="form-control w-full"
+                                    value="{{ old('title') }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Prix :</label>
                             <div class="form-group text-black">
-                                <input type="number" min="0" step="0.01" value="0.00" name="price" class="form-control w-full" value="{{ old('price') }}">
+                                <input type="number" min="0" step="0.01" value="0.00" name="price"
+                                    class="form-control w-full" value="{{ old('price') }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Stock :</label>
                             <div class="form-group text-black">
-                                <input type="number" name="quantity" class="form-control w-full" value="{{ old('quantity') }}">
+                                <input type="number" name="quantity" class="form-control w-full"
+                                    value="{{ old('quantity') }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
@@ -78,7 +81,7 @@
                             <label class="font-bold text-lg">Référence :</label>
                             <div class="form-group text-black">
                                 <input type="text" name="reference" class="form-control w-full"
-                                value="{{ old('reference') }}">
+                                    value="{{ old('reference') }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">

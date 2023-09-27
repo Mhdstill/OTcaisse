@@ -27,7 +27,7 @@
 
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-4 py-3">
                                 <div class="flex items-center">
                                     Couleur
 
@@ -39,13 +39,13 @@
 
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-2 py-3">
                                 <div class="flex items-center">
                                     Statut
 
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-12 py-3">
                                 <div class="flex items-center">
                                     Action
 
@@ -58,7 +58,7 @@
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td class="px-6 py-4">{{ $category->name }}</td>
                                 <td scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    class="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <div class="h-8 w-20" style="background-color: {{ $category->color }}">
 
                                     </div>
@@ -68,7 +68,7 @@
                                     {{ $category->description }}
                                 </td>
                                 <td scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    class="px-4 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $category->status }}
                                 </td>
                                 <td>

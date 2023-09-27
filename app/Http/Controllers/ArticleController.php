@@ -20,7 +20,7 @@ class ArticleController extends Controller
             'quantity'=>'required | integer | min:0',
             'quantity_alert'=>'required | integer | min:0',
             'category_id'=>'required',
-            'image'=>'nullable | image | mimes:jpeg,png,jpg,gif,webp,heif,heic,heif-sequence,heic-sequence',
+            'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,webp,heif,heic,heif-sequence,heic-sequence',
             'description'=>'nullable |string',
             'reference'=>'nullable',
             'status' => 'required| in:actif,inactif',

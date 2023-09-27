@@ -26,7 +26,7 @@
                                     Titre
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-8 py-3">
                                 <div class="flex items-center">
                                     Prix
                                 </div>
@@ -36,17 +36,17 @@
                                     Stock
                                 </div>
                             </th>
-                            <th scope="col" class="px-16 py-3">
+                            <th scope="col" class="px-2 py-3">
                                 <div class="flex items-center">
                                     Alerte stock
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-10 py-3">
                                 <div class="flex items-center">
                                     Catégorie
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-16 py-3">
                                 <div class="flex items-center">
                                     Image
                                 </div>
@@ -56,17 +56,17 @@
                                     Description
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-2 py-3">
                                 <div class="flex items-center">
                                     Référence
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-2 py-3">
                                 <div class="flex items-center">
                                     Statut
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-16 py-3">
                                 <div class="flex items-center">
                                     Action
                                 </div>
@@ -81,13 +81,13 @@
                                 <td scope="row" class="px-6 py-4">{{ $article->title }}</td>
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $article->price }} €</td>
-                                <td class="px-16 py-4">{{ $article->quantity }}</td>
-                                <td class="px-16 py-4">{{ $article->quantity_alert }}</td>
-                                <td class="px-16 py-4">{{ $article->category != null ? $article->category->name : 'ND' }}</td>
+                                <td class="px-20 py-4">{{ $article->quantity }}</td>
+                                <td class="px-8 py-4">{{ $article->quantity_alert }}</td>
+                                <td class="px-12 py-4">{{ $article->category != null ? $article->category->name : 'ND' }}</td>
                                 <td class="px-16 py-4">{{ $article->image }}</td>
-                                <td class="px-16 py-4">{{ $article->description }}</td>
-                                <td class="px-16 py-4">{{ $article->reference }}</td>
-                                <td class="px-16 py-4">{{ $article->status }}</td>
+                                <td class="px-8 py-4">{{ $article->description }}</td>
+                                <td class="px-4 py-4">{{ $article->reference }}</td>
+                                <td class="px-4 py-4">{{ $article->status }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <form action="{{ route('articles.destroy', $article) }}" method="POST">
 

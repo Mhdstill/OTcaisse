@@ -36,16 +36,25 @@
         </section>
 
         <section class="mt-10">
-            <form class="flex flex-col" method="POST" action="#">
+            <form class="flex flex-col" method="POST" action="{{ route('login') }}">
+                @csrf
                 <div class="mb-6 pt-3 rounded bg-gray-200">
                     <label class="block text-gray-700 text-sm font-bold mb-2 ml-3" for="email">E-mail</label>
-                    <input type="text" id="email"
-                        class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-blue-300 transition duration-500 px-3 pb-3">
+                    <input type="email" id="email" name="email"
+                        class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-blue-300 transition duration-500 px-3 pb-3"
+                        value="{{ old('email') }}" required>
+                    @error('email')
+                        <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="mb-6 pt-3 rounded bg-gray-200">
                     <label class="block text-gray-700 text-sm font-bold mb-2 ml-3" for="password">Mot de passe</label>
-                    <input type="password" id="password"
-                        class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-blue-300 transition duration-500 px-3 pb-3">
+                    <input type="password" id="password" name="password"
+                        class="bg-gray-200 rounded w-full text-gray-700 focus:outline-none border-b-4 border-gray-300 focus:border-blue-300 transition duration-500 px-3 pb-3"
+                        required>
+                    @error('password')
+                        <div class="text-red-500 mt-2 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="flex justify-end">
                     <a href="#" class="text-sm text-purple-700 hover:text-purple-00 hover:underline mb-6">Mot de

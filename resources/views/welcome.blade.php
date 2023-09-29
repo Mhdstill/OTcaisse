@@ -57,7 +57,7 @@
                     @enderror
                 </div>
                 <div class="flex justify-end">
-                    <a href="#" class="text-sm text-purple-700 hover:text-purple-00 hover:underline mb-6">Mot de
+                    <a href="{{ route('password.request') }}" class="text-sm text-purple-700 hover:text-purple-00 hover:underline mb-6">Mot de
                         passe oublié ?</a>
                 </div>
                 <button

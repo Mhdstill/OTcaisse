@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SellController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 
@@ -17,18 +18,18 @@ use App\Http\Controllers\CategoryController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/caisse', [SellController::class, 'index'])->name('dashboard');
+
     Route::resource('articles', ArticleController::class);
     Route::resource('categories', CategoryController::class);
+    // Route::resource('sell', SellController::class);
 
 });
 

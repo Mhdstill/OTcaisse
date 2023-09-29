@@ -1,14 +1,20 @@
 <x-app-layout>
 
-    <div class="m-10">
-        <div class="pb-8 flex justify-around items-center">
-            <h2 class="font-bold text-lg text-white">CRUD Categories - OTcaisse</h2>
+    <header class="bg-white dark:bg-yellow-600 shadow">
+        <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                Catégories
+            </h2>
             <a class="border-4 border-gray-800 bg-gray-800 text-white rounded-xl p-2"
                 href="{{ route('categories.create') }}">
                 Créer une nouvelle catégorie</a>
             <a class="border-4 border-gray-800 bg-gray-800 text-white rounded-xl p-2" href="{{ route('dashboard') }}">
                 Retour</a>
         </div>
+    </header>
+
+    <div class="m-10">
+
         <div class="row mt-2">
             <div class="col-lg-12 italic pb-4 text-white">
                 @if ($message = Session::get('success'))

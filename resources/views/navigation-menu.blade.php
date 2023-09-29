@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 
                 <div class="shrink-0 flex items-center">
-                    <img src="{{ asset('../img/logo.png') }}" class="w-16 h-16 ml-4">
+                    <img src="{{ asset('../img/logo-ot-t.jpeg') }}" class="w-18 h-14 ml-4">
                 </div>
 
                 <!-- Navigation Links -->

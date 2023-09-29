@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <header class="bg-white dark:bg-yellow-600 shadow">
+    <header class="bg-white dark:bg-gray-600 shadow">
         <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Catégories
@@ -63,8 +63,7 @@
                         @foreach ($categories as $category)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td class="px-6 py-4">{{ $category->name }}</td>
-                                <td scope="row"
-                                    class="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <td scope="row" class="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <div class="h-8 w-20" style="background-color: {{ $category->color }}">
 
                                     </div>

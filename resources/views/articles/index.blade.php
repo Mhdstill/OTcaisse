@@ -25,6 +25,11 @@
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
+                            <th scope="col" class="px-4 py-3">
+                                <div class="flex items-center">
+                                    Image
+                                </div>
+                            </th>
                             <th scope="col" class="px-12 py-3">
                                 <div class="flex items-center">
                                     Titre
@@ -50,11 +55,7 @@
                                     Catégorie
                                 </div>
                             </th>
-                            <th scope="col" class="px-4 py-3">
-                                <div class="flex items-center">
-                                    Image
-                                </div>
-                            </th>
+
                             <th scope="col" class="px-12 py-3">
                                 <div class="flex items-center">
                                     Description
@@ -75,20 +76,19 @@
                                     Action
                                 </div>
                             </th>
-
-
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($articles as $article)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <td class="px-4 py-0.5">
+                                    <img class="h-24 w-26 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}" src="{{ $article->image != null ? url('storage/'.$article->image) : url('img/andrew-small-unsplash.jpg') }}" alt=""></td>
                                 <td scope="row" class="px-2 py-4">{{ $article->title }}</td>
                                 <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $article->price }} €</td>
                                 <td class="px-20 py-4">{{ $article->quantity }}</td>
                                 <td class="px-8 py-4">{{ $article->quantity_alert }}</td>
                                 <td class="px-12 py-4">{{ $article->category != null ? $article->category->name : 'ND' }}</td>
-                                <td class="px-4 py-0.5">{{ $article->image }}</td>
                                 <td class="px-8 py-4">{{ $article->description }}</td>
                                 <td class="px-4 py-4">{{ $article->reference }}</td>
                                 <td class="px-4 py-4">{{ $article->status }}</td>

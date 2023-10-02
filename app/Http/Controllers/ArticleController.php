@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -49,7 +50,7 @@ class ArticleController extends Controller
         $validData = $request->validate($this->rules());
             
         if ($request->image != null) {
-            $path = Storage::putFileAs('public', $request->image, $validData['title'].'.'.$request->image->extension());
+            $path = Storage::putFileAs('img', $request->image, Str::slug($validData['title'], '_').'.'.$request->image->extension());
             $validData["image"] = $path;
         }
 
@@ -75,7 +76,12 @@ class ArticleController extends Controller
     {
         $validData = $request->validate($this->rules());
 
-        $article->update($request->all());
+        if ($request->image != null) {
+            $path = Storage::putFileAs('img', $request->image, Str::slug($validData['title'], '_').'.'.$request->image->extension());
+            $validData["image"] = $path;
+        }
+
+        $article->update($validData);
 
         return redirect()->route('articles.index')
             ->with('success','Article mis à jour avec succès !');

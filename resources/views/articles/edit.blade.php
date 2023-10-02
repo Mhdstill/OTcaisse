@@ -26,7 +26,8 @@
                     </div>
                 @endif
 
-                <form action="{{ route('articles.update', $article->id) }}" method="POST">
+                <form action="{{ route('articles.update', $article->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -42,7 +43,8 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Prix :</label>
                             <div class="form-group text-black">
-                                <input type="number" min="0" step="0.01" name="price" class="form-control w-full" value="{{ old('price', $article->price) }}">
+                                <input type="number" min="0" step="0.01" name="price"
+                                    class="form-control w-full" value="{{ old('price', $article->price) }}">
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
@@ -72,8 +74,15 @@
                         </div>
                         <div class="form-group py-2">
                             <label class="font-bold text-lg" for="image">Image :</label>
+                            @if($article->image)
+                            <img src="{{ asset('img/' . $article->image) }}" alt="Image description" />
+                            @endif
                             <input type="file" name="image" id="image" class="form-control-file">
+                            @if ($errors->has('image'))
+                                <span class="text-danger">{{ $errors->first('image') }}</span>
+                            @endif
                         </div>
+                        
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Description :</label>
                             <div class="form-group text-black">
@@ -94,12 +103,13 @@
                                 <option value="inactif">inactif</option>
                             </select>
                         </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                        <button type="submit"
-                            class="border-4 border-gray-800 bg-white  text-gray-800 rounded-xl p-3 px-5">Envoyer</button>
+                        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                            <button type="submit"
+                                class="border-4 border-gray-800 bg-white  text-gray-800 rounded-xl p-3 px-5">Envoyer</button>
+                        </div>
+
                     </div>
+                </form>
             </div>
-            </form>
         </div>
-    </div>
 </x-app-layout>

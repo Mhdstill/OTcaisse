@@ -1,15 +1,13 @@
 <x-app-layout>
 
-    <header class="bg-white dark:bg-gray-600 shadow">
+    <header class="bg-gray-600 dark:bg-teal-600 shadow">
         <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Catégories
             </h2>
-            <a class="border-4 border-gray-800 bg-gray-800 text-white rounded-xl p-2"
+            <a class="border-2 border-teal-200 bg-teal-600 text-white italic rounded-xl p-2"
                 href="{{ route('categories.create') }}">
                 Créer une nouvelle catégorie</a>
-            <a class="border-4 border-gray-800 bg-gray-800 text-white rounded-xl p-2" href="{{ route('dashboard') }}">
-                Retour</a>
         </div>
     </header>
 
@@ -25,7 +23,7 @@
             </div>
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-teal-700 dark:text-white">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 <div class="flex items-center">
@@ -61,9 +59,10 @@
                     </thead>
                     <tbody>
                         @foreach ($categories as $category)
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <tr class="bg-white border-b dark:bg-teal-600 dark:border-teal-900 dark:text-white">
                                 <td class="px-6 py-4">{{ $category->name }}</td>
-                                <td scope="row" class="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <td scope="row"
+                                    class="px-2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     <div class="h-8 w-20" style="background-color: {{ $category->color }}">
 
                                     </div>
@@ -80,12 +79,12 @@
                                     <form action="{{ route('categories.destroy', $category->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <a class="btn btn-info pr-2 class=font-medium text-green-600 dark:text-green-500 hover:underline"
+                                        <a class="btn btn-info pr-2 class=font-medium text-lime-600 dark:text-lime-400 hover:underline"
                                             href="{{ route('categories.show', $category->id) }}">Voir</a>
-                                        <a class="btn btn-primary pr-2 class=font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                        <a class="btn btn-primary pr-2 class=font-medium text-blue-600 dark:text-yellow-400 hover:underline"
                                             href="{{ route('categories.edit', $category->id) }}">Editer</a>
                                         <button type="submit"
-                                            class="btn btn-danger class=font-medium text-red-600 dark:text-red-500 hover:underline">Supprimer</button>
+                                            class="btn btn-danger class=font-medium text-red-600 dark:text-red-700 hover:underline">Supprimer</button>
                                     </form>
                                 </td>
                             </tr>

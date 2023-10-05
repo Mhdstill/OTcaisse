@@ -7,11 +7,12 @@
             
         </div>
     </header>
-    <div class="m-10">
+    <div class="m-10 bg-gradient-to-l from-blue-400 to-emerald-200">
     <div class="row py-12">
-        <div class="w-full italic bg-teal-600 rounded-md">
+        <div class="w-full italic rounded-md">
+        
             <div class="py-2">
-                <div class="max-w-none mx-auto gap-8 divide-y-2 space-y-4">
+                <div class="max-w-none mx-auto gap-8 divide-y-8 space-y-4">
                     @foreach ($categories as $category)
                     <div class="flex">
                         <div class="basis-1/4  ml-4 mt-4 mr-2 flex flex-col items-center justify-center rounded-md text-center text-2xl" style="background-color: {{ $category->color }}">

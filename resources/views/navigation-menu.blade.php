@@ -1,3 +1,5 @@
+
+
 <nav x-data="{ open: false }" class="bg-gray-100 dark:bg-gray-100 mb-4 pt-4">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -5,12 +7,12 @@
             <div class="flex">
                 <!-- Logo -->
                 
-                <div class="shrink-0 flex items-center">
+                <div class="shrink-0 flex items-center mr-2">
                     <img src="{{ asset('../img/logo-ot-nb.jpeg') }}" class="w-18 h-14 ml-2">
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex font-lobster text-2xl">
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         Caisse
                     </x-nav-link>

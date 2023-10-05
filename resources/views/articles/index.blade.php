@@ -1,17 +1,17 @@
 <x-app-layout>
     <header class="bg-gray-600 dark:bg-teal-600 shadow">
         <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            <h2 class="font-h1 text-3xl text-gray-800 dark:text-gray-200 leading-tight">
                 Articles
             </h2>
-            <a class="border-2 border-teal-200 bg-teal-600 text-white italic rounded-xl p-2"
+            <a class="border-2 border-teal-200 bg-teal-600 text-white font-h1 rounded-xl p-2"
                 href="{{ route('articles.create') }}">
                 Créer un nouvel article</a>
         </div>
     </header>
     <div class="m-10">
 
-        <div class="row mt-2">
+        <div class="row mt-2 font-paragraph">
             <div class="col-lg-12 italic pb-4 text-white">
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">

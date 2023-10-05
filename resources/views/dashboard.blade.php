@@ -1,18 +1,18 @@
 <x-app-layout>
     <header class="bg-gray-600 dark:bg-teal-600 shadow">
-        <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
-            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+            <h2 class="font-h1 text-3xl text-gray-800 dark:text-gray-200 leading-tight">
                 Caisse
             </h2>
             
         </div>
     </header>
-    <div class="m-10 bg-gradient-to-l from-blue-400 to-emerald-200">
-    <div class="row py-12">
-        <div class="w-full italic rounded-md">
+    <div class="m-10 bg-gradient-to-r from-teal-300 to-teal-500">
+    <div class="row py-2">
+        <div class="w-full rounded-md">
         
             <div class="py-2">
-                <div class="max-w-none mx-auto gap-8 divide-y-8 space-y-4">
+                <div class="max-w-none mx-auto gap-8 divide-y-8 space-y-4 font-paragraph">
                     @foreach ($categories as $category)
                     <div class="flex">
                         <div class="basis-1/4  ml-4 mt-4 mr-2 flex flex-col items-center justify-center rounded-md text-center text-2xl" style="background-color: {{ $category->color }}">

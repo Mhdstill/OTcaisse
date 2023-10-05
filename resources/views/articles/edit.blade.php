@@ -1,11 +1,11 @@
 <x-app-layout>
     <div class="m-10 bg-gray-100">
         <div class="pb-8 flex justify-start items-center">
-            <a class="border-4 border-teal-400 bg-white text-black rounded-xl p-2 ml-2"
+            <a class="border-4 border-teal-400 bg-white text-black font-paragraph rounded-xl p-2 ml-2"
             href="{{ route('articles.index') }}">
             Retour</a>
         </div>
-        <div class="row mt-2">
+        <div class="row mt-2 font-paragraph">
             <div class="col-lg-12 italic pb-4 text-white">
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">

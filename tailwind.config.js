@@ -15,6 +15,11 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                display: ['Oswald', ...defaultTheme.fontFamily.sans],
+                match: ['Bebas Neue', 'sans-serif'],
+                lobster: ['Lobster Two', 'cursive'],
+                h1: ['Alegreya Sans SC', 'sans-serif'],
+                paragraph: ['Rubik', 'sans-serif'],
             },
         },
     },

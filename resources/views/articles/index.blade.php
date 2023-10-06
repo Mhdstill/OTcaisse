@@ -12,7 +12,7 @@
     <div class="m-10">
 
         <div class="row mt-2 font-paragraph">
-            <div class="col-lg-12 italic pb-4 text-white">
+            <div class="col-lg-12 italic pb-4 text-black">
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
                         <p>{{ $message }}</p>

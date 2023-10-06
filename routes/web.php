@@ -30,6 +30,7 @@ Route::middleware([
     Route::resource('articles', ArticleController::class);
     Route::resource('categories', CategoryController::class);
     // Route::resource('sell', SellController::class);
-    
+    // Route::get('/current-sale/{id}', 'SellController@show');
+
 });
 

@@ -14,7 +14,7 @@
                     </div>
                 @endif
             </div>
-            <div class="col-lg-12 border-4 border-teal-400 p-4 rounded-xl bg-teal-800 text-white drop-shadow-2xl">
+            <div class="col-lg-12 border-4 border-teal-400 p-4 rounded-xl bg-teal-800 text-black drop-shadow-2xl">
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         Il y a un problème avec votre enregistrement.<br>

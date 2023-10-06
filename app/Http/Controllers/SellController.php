@@ -13,4 +13,5 @@ class SellController extends Controller
         $categories = Category::with('articles')->get();
         return view('dashboard', compact('categories'));
     }
+    
 }

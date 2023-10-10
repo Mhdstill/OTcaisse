@@ -10,31 +10,31 @@
     </header>
 
 
-    <div class="m-8">
+    <div class="px-4">
         <div class="row py-2">
             <div class="w-full rounded-md">
                 <div class="py-2">
-                    <div class="max-w-none mx-auto gap-4 space-y-4 font-paragraph">
+                    <div class="max-w-none mx-auto gap-4 space-y-1 font-paragraph">
                         @foreach ($categories as $category)
-                            <div class="flex flex-col" style="background-color: {{ $category->color }}">
+                            <div class="flex items-center p-2 gap-4" style="background-color: {{ $category->color }}">
                                 <div
-                                    class="w-full ml-4 mt-4 mb-4 flex flex-col items-start rounded-md text-center text-2xl">
+                                    class="font-semibold text-xl">
                                     {{ $category->name }}
                                 </div>
-                                <div class="flex flex-wrap gap-2 p-2 ml-4 mb-2 mr-2">
+                                <div class="flex flex-wrap gap-2">
                                     @foreach ($category->articles as $article)
                                         @if ($article->status != 'inactif')
-                                            <a href="#"
-                                                class="{{ $article->status == 'actif' ? 'bg-white shadow-xl hover:shadow' : 'bg-gray-200' }} flex flex-col items-center justify-between border-2 rounded-md w-20 py-2 gap-2 transition-all duration-300">
-                                                <img class="h-32 w-32 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
+                                            <a href="{{ route('cart.add', $article->id) }}" class="bg-white shadow-xl hover:shadow flex items-center justify-between border-2 rounded-md p-2 gap-2 transition-all duration-300">
+                                                {{-- <div class="">
+                                                    <img class="h-24 w-24 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
                                                     src="{{ $article->image != null ? url('storage/' . $article->image) : url('img/andrew-small-unsplash.jpg') }}"
                                                     alt="">
-                                                <div
-                                                    class="flex flex-col gap-2 items-center justify-center text-center">
+                                                </div> --}}
+                                                <div class="flex flex-col gap-1 items-center justify-center text-center">
                                                     <div class="flex flex-col">
                                                         <span class="font-semibold text-sm">{{ $article->title }}</span>
                                                     </div>
-                                                    <div class="">
+                                                    <div class="text-sm -mb-1">
                                                         {{ $article->price }} €
                                                     </div>
                                                 </div>

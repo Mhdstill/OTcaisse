@@ -32,8 +32,11 @@
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Article :</label>
                             <div class="form-group text-black">
-                                <input type="text" name="article_id" class="form-control w-full"
-                                    value="{{ old('article_id') }}">
+                                <select name="article_id" class="form-control w-full">
+                                    @foreach($articles as $article)
+                                        <option value="{{ $article->id }}">{{ $article->title }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">

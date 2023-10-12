@@ -24,7 +24,7 @@
                                 <div class="flex flex-wrap gap-2">
                                     @foreach ($category->articles as $article)
                                         @if ($article->status != 'inactif')
-                                            <a href="{{ route('cart.add', $article->id) }}" class="bg-white shadow-xl hover:shadow flex items-center justify-between border-2 rounded-md p-2 gap-2 transition-all duration-300">
+                                            <a href="{{ url('/nouvelle-vente') }}" class="bg-white shadow-xl hover:shadow flex items-center justify-between border-2 rounded-md p-2 gap-2 transition-all duration-300">
                                                 {{-- <div class="">
                                                     <img class="h-24 w-24 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
                                                     src="{{ $article->image != null ? url('storage/' . $article->image) : url('img/andrew-small-unsplash.jpg') }}"

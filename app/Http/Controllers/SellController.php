@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+
+use Session;
 use App\Models\Sale;
 use App\Models\Article;
 use App\Models\Category;
@@ -18,20 +20,37 @@ class SellController extends Controller
         return view('dashboard', compact('categories'));
     }
 
-    
-   public function create(Article $article)
 
+    public function create(Article $article)
     {
-        
+        return view('sales.create', compact('article'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Article $article)
     {
 
+        $validData = $request->validate([
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric',
+            'payment_method' => 'required|string',
+            'commentary' => 'nullable|string',
+        ]);
+
+        $sale = new Sale;
+        $sale->quantity=$validData['quantity'];
+        $sale->price=$validData['price'];
+        $sale->payment_method=$validData['payment_method'];
+        $sale->status=$validData['status'];
+        $sale->commentary=$validData['commentary'];
+
+        return redirect()->route('sales.index')->with('succes', 'Vente enregistrée !');
     }
 
     public function cart()
     {
-        // ici je récupère les ventes en cours
+        $sale = Session::get('sale', []);
+        return view('cart', compact('cart'));
     }
+
+
 }

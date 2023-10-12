@@ -30,9 +30,13 @@ Route::middleware([
     Route::resource('articles', ArticleController::class);
     Route::resource('categories', CategoryController::class);
 
-    Route::get('/cart', [SellController::class, 'cart'])->name('cart.index');
-    Route::post('/cart/{article}', [SellController::class, 'addToCart'])->name('cart.add');
-    Route::delete('/cart/{article}', [SellController::class, 'removeFromCart'])->name('cart.remove');
+    Route::get('/nouvelle-vente/{article}', [SellController::class, 'create'])->name('create');
+    Route::post('addtosale/{article}', [SellController::class,'post'])->name('addtosale');
+
+
+    
+
+
 
 });
 

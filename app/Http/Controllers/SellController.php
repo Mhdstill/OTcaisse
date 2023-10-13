@@ -37,10 +37,11 @@ class SellController extends Controller
         ]);
 
         $sale = new Sale;
+        $sale->article_id=$article->id;
         $sale->quantity=$validData['quantity'];
         $sale->price=$validData['price'];
         $sale->payment_method=$validData['payment_method'];
-        $sale->status=$validData['status'];
+        $sale->status='active';
         $sale->commentary=$validData['commentary'];
 
         return redirect()->route('sales.index')->with('succes', 'Vente enregistrée !');

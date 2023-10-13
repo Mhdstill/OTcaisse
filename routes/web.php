@@ -33,11 +33,6 @@ Route::middleware([
     Route::get('/nouvelle-vente/{article}', [SellController::class, 'create'])->name('create');
     Route::post('addtosale/{article}', [SellController::class,'post'])->name('addtosale');
 
-
-    
-
-
-
 });
 
 // index affiche la liste des ventes actives.

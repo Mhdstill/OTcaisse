@@ -46,12 +46,4 @@ class SellController extends Controller
 
         return redirect()->route('sales.index')->with('succes', 'Vente enregistrée !');
     }
-
-    public function cart()
-    {
-        $sale = Session::get('sale', []);
-        return view('cart', compact('cart'));
-    }
-
-
 }

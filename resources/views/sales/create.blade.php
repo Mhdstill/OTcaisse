@@ -1,4 +1,4 @@
-<x-app-layout>
+{{-- <x-app-layout>
     <div class="m-10 bg-gray-100">
         <div class="pb-8 flex justify-start items-center">
             <a class="border-4 border-teal-400 bg-white text-black font-paragraph rounded-xl p-2 ml-2"
@@ -25,7 +25,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('sales.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('sales.store', ['article' => $article->id]) }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -84,4 +84,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-app-layout> --}}

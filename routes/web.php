@@ -31,8 +31,8 @@ Route::middleware([
     Route::resource('categories', CategoryController::class);
 
     Route::get('/nouvelle-vente/{article}', [SellController::class, 'create'])->name('create');
-    Route::post('addtosale/{article}', [SellController::class,'post'])->name('addtosale');
-
+    Route::post('addtosale/{article}', [SellController::class,'store'])->name('addtosale');
+    
 });
 
 // index affiche la liste des ventes actives.

@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
 use Session;
 use App\Models\Sale;
 use App\Models\Article;
 use App\Models\Category;
-use App\Http\Controllers\Request;
-
-
-
+use Illuminate\Http\Request; // Correct the Request import
 
 class SellController extends Controller
 {
@@ -20,15 +16,14 @@ class SellController extends Controller
         return view('dashboard', compact('categories'));
     }
 
-
     public function create(Article $article)
     {
-        return view('sales.create', compact('article'));
+        $articles = Article::all();
+        return view('cart', compact('article', 'articles'));
     }
 
     public function store(Request $request, Article $article)
     {
-
         $validData = $request->validate([
             'quantity' => 'required|integer|min:1',
             'price' => 'required|numeric',
@@ -37,13 +32,15 @@ class SellController extends Controller
         ]);
 
         $sale = new Sale;
-        $sale->article_id=$article->id;
-        $sale->quantity=$validData['quantity'];
-        $sale->price=$validData['price'];
-        $sale->payment_method=$validData['payment_method'];
-        $sale->status='active';
-        $sale->commentary=$validData['commentary'];
+        $sale->article_id = $article->id;
+        $sale->quantity = $validData['quantity'];
+        $sale->price = $validData['price'];
+        $sale->payment_method = $validData['payment_method'];
+        $sale->status = 'active';
+        $sale->commentary = $validData['commentary'];
 
-        return redirect()->route('sales.index')->with('succes', 'Vente enregistrée !');
+        $sale->save();
+
+        return redirect()->route('sales.index')->with('success', 'Vente enregistrée !'); // Fix 'succes' to 'success'
     }
 }

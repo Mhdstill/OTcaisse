@@ -17,20 +17,21 @@
                     <div class="max-w-none mx-auto gap-4 space-y-1 font-paragraph">
                         @foreach ($categories as $category)
                             <div class="flex items-center p-2 gap-4" style="background-color: {{ $category->color }}">
-                                <div
-                                    class="font-semibold text-xl">
+                                <div class="font-semibold text-xl">
                                     {{ $category->name }}
                                 </div>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach ($category->articles as $article)
                                         @if ($article->status != 'inactif')
-                                            <a href="{{ route('create', ['article' => $article->id]) }}" class="bg-white shadow-xl hover:shadow flex items-center justify-between border-2 rounded-md p-2 gap-2 transition-all duration-300">
+                                            <a href="{{ route('create', ['article' => $article->id]) }}"
+                                                class="bg-white shadow-xl hover:shadow flex items-center justify-between border-2 rounded-md p-2 gap-2 transition-all duration-300">
                                                 {{-- <div class="">
-                                                    <img class="h-24 w-24 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
-                                                    src="{{ $article->image != null ? url('storage/' . $article->image) : url('img/andrew-small-unsplash.jpg') }}"
-                                                    alt="">
-                                                </div> --}}
-                                                <div class="flex flex-col gap-1 items-center justify-center text-center">
+                                                     <img class="h-24 w-24 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
+                                                     src="{{ $article->image != null ? url('storage/' . $article->image) : url('img/andrew-small-unsplash.jpg') }}"
+                                                     alt="">
+                                                 </div> --}}
+                                                <div
+                                                    class="flex flex-col gap-1 items-center justify-center text-center">
                                                     <div class="flex flex-col">
                                                         <span class="font-semibold text-sm">{{ $article->title }}</span>
                                                     </div>

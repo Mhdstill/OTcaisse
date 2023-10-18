@@ -51,23 +51,8 @@
                 var quantityInput = document.querySelector('input[name="quantity"]');
                 var totalElement = document.querySelector('.total');
 
-                var price = parseFloat(priceInput.value);
-                var quantity = parseInt(quantityInput.value);
 
-                if (!isNaN(price) && !isNaN(quantity)) {
-                    var total = price * quantity;
-                    totalElement.textContent = total.toFixed(2) + '€';
-                } else {
-                    totalElement.textContent = '0.00 €';
-                }
-            }
 
-            // Add event listeners to recalculate the total when inputs change
-            document.querySelector('input[name="price"]').addEventListener('input', calculateTotal);
-            document.querySelector('input[name="quantity"]').addEventListener('input', calculateTotal);
-
-            // Calculate the total initially
-            calculateTotal();
-        </script>
+   
     </div>
 </x-app-layout>

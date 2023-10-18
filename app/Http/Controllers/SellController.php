@@ -88,5 +88,20 @@ public function removeFromCart(Article $article)
     return redirect()->route('cart')->with('success', 'Article supprimé du panier !');
 }
 
+public function update(Request $request) {
+    $articleId = $request->input('articleId');
+    $quantity = $request->input('quantity');
+
+    // Fetch the article from the database
+    $article = Article::find($articleId);
+
+    // Update the quantity in the cart
+    // ...
+
+    // Return the new total for the article
+    return response()->json(['total' => $quantity * $article->price]);
+}
+
+
 
 }

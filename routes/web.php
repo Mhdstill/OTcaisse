@@ -34,6 +34,9 @@ Route::middleware([
     Route::post('addtosale/{article}', [SellController::class,'store'])->name('addtosale');
 
     Route::post('addtocart', [SellController::class, 'addToCart'])->name('addtocart');
+    Route::post('/updatecart', [SellController::class, 'update'])->name('update');
+
+
     Route::delete('/remove-from-cart/{article}', 'SellController@removeFromCart')->name('removefromcart');
 
 

@@ -10,8 +10,8 @@
                     <div class="flex flex-wrap gap-2">
                         @foreach ($category->articles as $article)
                             @if ($article->status != 'inactif')
-                                <label class="bg-white shadow-xl hover:shadow flex items-center justify-between border-2 rounded-md p-2 gap-2 transition-all duration-300">
-                                    <input type="checkbox" name="selected_articles[]" value="{{ $article->id }}">
+                                <label class="bg-white shadow-xl hover:shadow flex items-center justify-between rounded-md p-2 transition-all duration-300">
+                                    <input type="checkbox" class='rounded-xl border-2' name="selected_articles[]" value="{{ $article->id }}">
                                     {{-- <div class="">
                                         <img class="h-24 w-24 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
                                              src="{{ $article->image != null ? url('storage/' . $article->image) : url('img/andrew-small-unsplash.jpg') }}"

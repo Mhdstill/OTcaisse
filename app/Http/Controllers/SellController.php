@@ -81,19 +81,10 @@ public function checkout(Request $request)
 
 public function removeFromCart(Article $article)
 {
-    // Supprimez l'article du panier, en fonction de votre logique d'application.
-    // Par exemple, si vous stockez les articles du panier en session, vous pouvez le supprimer de la session ici.
-
-    // Redirigez ensuite l'utilisateur vers la vue du panier mise à jour.
-    return redirect()->route('cart')->with('success', 'Article supprimé du panier !');
+   
 }
 
-public function update(Request $request) {
-    $articleId = $request->input('articleId');
-    $quantity = $request->input('quantity');
 
-    // Fetch the article from the database
-    $article = Article::find($articleId);
 
     // Update the quantity in the cart
     // ...

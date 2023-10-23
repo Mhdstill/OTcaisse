@@ -7,6 +7,7 @@ use App\Models\Sale;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request; // Correct the Request import
 
 class SellController extends Controller
@@ -87,10 +88,13 @@ class SellController extends Controller
 
 public function cart()
 {
-    // You can retrieve the items in the cart and display them in the cart view.
-    // Additionally, provide the option to validate and proceed with the sale.
-    // Implement this as per your requirements.
+    $cart = Session::get('cart', []);
+    $selectedArticles = collect($cart)->map(function ($item, $id) {
+        return Article::find($id);
+    });
+    return view('cart', compact('selectedArticles'));
 }
+
 
 public function checkout(Request $request)
 {
@@ -124,12 +128,16 @@ public function removeFromCart(Article $article)
 {
     $cart = Session::get('cart', []);
 
-    // Supprimez l'article du panier
-    unset($cart[$article->id]);
-
-
-
-
+    if (array_key_exists($article->id, $cart)) {
+        unset($cart[$article->id]);
+        Session::put('cart', $cart);
+        // Add debugging statements to check cart data
+        dd($cart); // This will show the updated cart data
+        return redirect()->route('cart')->with('success', 'Article supprimé du panier avec succès !');
+    } else {
+        return redirect()->route('cart')->with('error', 'L\'article n\'existe pas dans le panier.');
+    }
+}
 
 
 public function update(Request $request)
@@ -142,11 +150,25 @@ public function update(Request $request)
     $newQuantity = $request->input('quantity');
     $newPrice = $request->input('price');
 
-    // Perform the update logic (e.g., update the cart or database)
+    $cart = Session::get('cart', []);
 
-    // Return a response (e.g., JSON response)
-    return response()->json(['message' => 'Cart updated successfully']);
+    // Si la quantité est zéro, supprimez l'article du panier
+    if ($newQuantity == 0) {
+        unset($cart[$articleId]);
+    } else {
+        // Sinon, mettez à jour l'article dans le panier
+        $cart[$articleId] = [
+            'quantity' => $newQuantity,
+            'price' => $newPrice,
+        ];
+    }
+
+    // Enregistrez le panier mis à jour dans la session
+    Session::put('cart', $cart);
+
+    return Redirect::route('cart')->with('success', 'Panier mis à jour avec succès !');
 }
+
 
 public function confirmPurchase(Request $request)
 {

@@ -1,7 +1,7 @@
 <x-app-layout>
-    <div class="m-10 mt-12 border-8 rounded-lg border-teal-200">
+    <div class="m-10 mt-12 border-8 rounded-lg border-teal-600">
         <h1 class="text-3xl text-lobster text-black mt-4 ml-4 mb-4">Votre panier</h1>
-        <form method="POST" action="{{ route('update') }}">
+        <form method="POST" action="{{ route('updatecart') }}">
             @csrf
             <table class="table-auto w-full mb-6">
                 <thead>
@@ -33,28 +33,19 @@
                                 {{ $article->price * $article->quantity }} €
                             </td>
                             <td class="border px-4 py-2">
-                                <button type="submit"
-                                    class="border-red-400 border-2 rounded-xl hover-bg-red-400 text-black font-bold py-2 px-4">
-                                    Supprimer
-                                </button>
+                                <form method="POST" action="{{ route('removeFromCart', $article) }}">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit"
+                                        class="border-red-400 border-2 rounded-xl hover-bg-red-400 text-black font-bold py-2 px-4">
+                                        Supprimer
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        </form>
-        {{-- @foreach ($selectedArticles as $article)
-            <form method="POST" action="{{ route('removeFromCart', ['article' => $article->id]) }}">
-                @csrf
-                <button type="submit"
-                    class="border-red-400 border-2 rounded-xl hover-bg-red-400 text-black font-bold py-2 px-4">
-                    Supprimer
-                </button>
-            </form>
-        @endforeach --}}
-
-        </tbody>
-        </table>
         </form>
     </div>
 
@@ -98,10 +89,15 @@
         </div>
     </div>
 
-    <button id="confirmPurchaseBtn" type="submit"
-        class="border-teal-600 border-2 rounded-xl hover-bg-teal-600 text-black font-bold py-2 px-4">
-        Validez l'achat
-    </button>
+    <form method="POST" action="{{ route('confirmPurchase') }}">
+        @csrf
+        <!-- le reste du formulaire -->
+        <button id="confirmPurchaseBtn" type="submit"
+            class="border-teal-600 border-2 rounded-xl hover-bg-teal-600 text-black font-bold py-2 px-4">
+            Valider le panier
+        </button>
+    </form>
+
 
 
     <!-- Bouton retour Caisse -->

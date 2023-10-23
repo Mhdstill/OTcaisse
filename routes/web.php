@@ -34,13 +34,15 @@ Route::middleware([
     Route::post('addtosale/{article}', [SellController::class,'store'])->name('addtosale');
 
     Route::post('addtocart', [SellController::class, 'addToCart'])->name('addtocart');
-    Route::post('/updatecart', [SellController::class, 'update'])->name('update');
+    // Route::post('/updatecart', [SellController::class, 'update'])->name('update');
 
+    Route::post('updatecart', [SellController::class, 'updateCart'])->name('updatecart');
 
     Route::post('/cart/remove/{article}', [SellController::class, 'removeFromCart'])->name('removeFromCart');
 
     Route::post('confirmpurchase', [SellController::class, 'confirmPurchase'])->name('confirmPurchase');
 
+    Route::get('/cart', [SellController::class, 'cart'])->name('cart');
 
     
 });

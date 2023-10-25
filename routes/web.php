@@ -42,6 +42,8 @@ Route::middleware([
     Route::post('/confirmpurchase', [SellController::class, 'confirmPurchase'])->name('confirmPurchase');
     Route::get('/cart', [SellController::class, 'cart'])->name('cart');
 
+    // Statistics routes
+    Route::get('/statistics', [SellController::class, 'statistics'])->name('statistics');
 });
 
 // index affiche la liste des ventes actives.

@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Sale;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request; // Correct the Request import
 
 class SellController extends Controller
 {
@@ -85,7 +82,6 @@ class SellController extends Controller
     return view('cart', compact('selectedArticles', 'totalPrice'));
 }
 
-
 public function cart()
 {
     $cart = Session::get('cart', []);
@@ -144,7 +140,6 @@ public function update(Request $request)
     return Redirect::route('cart')->with('success', 'Panier mis à jour avec succès !');
 }
 
-
 public function confirmPurchase(Request $request)
 {
     // Validate the request
@@ -161,7 +156,4 @@ public function confirmPurchase(Request $request)
 
     // Redirect to a success page or wherever is appropriate
     return redirect()->route('sales.index')->with('success', 'Vente confirmée!');
-}
-
-
 }

@@ -44,7 +44,6 @@ Route::middleware([
 
     Route::get('/cart', [SellController::class, 'cart'])->name('cart');
 
-    
 });
 
 // index affiche la liste des ventes actives.

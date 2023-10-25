@@ -96,32 +96,7 @@ public function cart()
 }
 
 
-public function checkout(Request $request)
-{
-    $validData = $request->validate([
-        'payment_method' => 'required|string',
-        'commentary' => 'nullable|string',
-    ]);
 
-    if ($validData['payment_method'] === 'multiple') {
-        $validData = $request->validate([
-            'other_payment_method' => 'required|string|in:credit_card,cash',
-            'other_payment_amount' => 'required|numeric',
-            'other_payment_comment' => 'nullable|string',
-        ]);
-    }
-
-    // Process the sale based on the selected payment method
-    if ($validData['payment_method'] === 'multiple') {
-        // Handle the case of a partial payment with credit card and the rest by cash
-        // Access the data via $validData, e.g., $validData['other_payment_method'], $validData['other_payment_amount'], $validData['other_payment_comment']
-    } else {
-        // Handle other payment methods (chèque, espèces, carte bancaire)
-    }
-
-    // Redirect to a success page or wherever is appropriate
-    return redirect()->route('sales.index')->with('success', 'Vente enregistrée !');
-}
 
 
 public function removeFromCart(Article $article)
@@ -187,6 +162,5 @@ public function confirmPurchase(Request $request)
     // Redirect to a success page or wherever is appropriate
     return redirect()->route('sales.index')->with('success', 'Vente confirmée!');
 }
-
 
 }

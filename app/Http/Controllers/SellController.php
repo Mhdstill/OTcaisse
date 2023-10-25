@@ -163,4 +163,5 @@ public function confirmPurchase(Request $request)
     return redirect()->route('sales.index')->with('success', 'Vente confirmée!');
 }
 
+
 }

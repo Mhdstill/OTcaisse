@@ -47,6 +47,13 @@
                 </tbody>
             </table>
         </form>
+        <div class="text-start pl-8 mt-8 mr-12 mb-8">
+            <a href="{{ route('dashboard') }}"
+                class="border-teal-600 border-2 rounded-xl hover-bg-teal-600 text-black font-bold py-2 px-4">
+                Ajouter d'autres articles
+            </a>
+        </div>
+        
     </div>
 
     <div name="paiement_et_total" class="text-center flex-baseline">

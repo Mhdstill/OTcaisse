@@ -17,7 +17,7 @@
                 <tbody>
                     @foreach ($selectedArticles as $article)
                         <tr>
-                            <td class="border px-4 py-2">{{ $article->id }}</td>
+                            <td class="border px-4 py-2">{{ $article->id ?? 'N/A' }}</td>
                             <td class="border px-4 py-2">{{ $article->title }}</td>
                             <td class="border px-4 py-2">
                                 <input type="text" name="price_{{ $article->id }}" value="{{ $article->price }}"
@@ -33,9 +33,9 @@
                                 {{ $article->price * $article->quantity }} €
                             </td>
                             <td class="border px-4 py-2">
-                                <form method="POST" action="{{ route('removeFromCart', $article) }}">
+                                <form method="POST" action="{{ route('removeFromCart', $article->id) }}">
                                     @csrf
-                                    @method('POST')
+                                    @method('DELETE')
                                     <button type="submit"
                                         class="border-red-400 border-2 rounded-xl hover-bg-red-400 text-black font-bold py-2 px-4">
                                         Supprimer
@@ -47,13 +47,13 @@
                 </tbody>
             </table>
         </form>
-        <div class="text-start pl-8 mt-8 mr-12 mb-8">
+        <div class="text-start pl-4 mt-8 mr-12 mb-8">
             <a href="{{ route('dashboard') }}"
                 class="border-teal-600 border-2 rounded-xl hover-bg-teal-600 text-black font-bold py-2 px-4">
                 Ajouter d'autres articles
             </a>
         </div>
-        
+
     </div>
 
     <div name="paiement_et_total" class="text-center flex-baseline">
@@ -151,15 +151,15 @@
         }
 
         function updateTotal(articleId) {
-            // // Get the new quantity
-            // var newQuantity = document.querySelector('input[name="quantity_' + articleId + '"]').value;
+            // Get the new quantity
+            var newQuantity = document.querySelector('input[name="quantity_' + articleId + '"]').value;
 
-            // // Send an AJAX request to the server
-            // var xhr = new XMLHttpRequest();
-            // xhr.open('POST', '/updatecart', true);
-            // xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            // xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-            // xhr.send('articleId=' + articleId + '&quantity=' + newQuantity);
+            // Send an AJAX request to the server
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/updatecart', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            xhr.send('articleId=' + articleId + '&quantity=' + newQuantity);
 
             // Update the total of the article
             var totalElement = document.querySelector('.total_' + articleId);
@@ -192,6 +192,26 @@
             }
         }
 
+        function removeFromCart(articleId) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('DELETE', '/cart/remove/' + articleId, true);
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            xhr.send();
+
+            xhr.onload = function() {
+                console.log('Status: ' + xhr.status);
+                console.log('Response: ' + xhr.responseText);
+
+                if (xhr.status === 200) {
+                    // If the request was successful, reload the page to update the cart
+                    location.reload();
+                } else {
+                    // If the request failed, display an error message
+                    alert('Echec de la suppression de l\'article !');
+                }
+            };
+
+        }
 
         // Confirm purchase button
 

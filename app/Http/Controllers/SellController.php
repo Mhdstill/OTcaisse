@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Sale;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request; // Correct the Request import
 
 class SellController extends Controller
 {
@@ -65,53 +68,81 @@ class SellController extends Controller
 
 
     public function addToCart(Request $request)
-{
-    // Retrieve the selected articles
-    $selectedArticleIds = $request->input('selected_articles');
+    {
+        $selectedArticleIds = $request->input('selected_articles');
+
+        if ($selectedArticleIds) {
+            $selectedArticles = Article::whereIn('id', $selectedArticleIds)->get();
+        } else {
+            $selectedArticles = collect();
+        }
+
+        $totalPrice = $selectedArticles->sum('price');
+
+        return view('cart', compact('selectedArticles', 'totalPrice'));
+    }
+
+
+    public function cart()
+    {
+        $cart = Session::get('cart', []);
+        $selectedArticles = collect($cart)->map(function ($item, $id) use ($cart) {
+            $article = Article::find($id);
+            if (!$article) {
+                unset($cart[$id]);
+                Session::put('cart', $cart);
+            }
+            return $article;
+        });
     
-    if ($selectedArticleIds) { // Check if $selectedArticleIds is not null
-        $selectedArticles = Article::whereIn('id', $selectedArticleIds)->get();
-    } else {
-        $selectedArticles = []; // Initialize an empty array if no articles are selected
+        return view('cart', compact('selectedArticles'));
+    }
+    
+    
+
+
+public function checkout(Request $request)
+{
+    $validData = $request->validate([
+        'payment_method' => 'required|string',
+        'commentary' => 'nullable|string',
+    ]);
+
+    if ($validData['payment_method'] === 'multiple') {
+        $validData = $request->validate([
+            'other_payment_method' => 'required|string|in:credit_card,cash',
+            'other_payment_amount' => 'required|numeric',
+            'other_payment_comment' => 'nullable|string',
+        ]);
     }
 
-    // You can calculate the total price of selected articles here
-    $totalPrice = $selectedArticles->sum('price');
-
-    // Pass the selected articles and total price to the cart view
-    return view('cart', compact('selectedArticles', 'totalPrice'));
-}
-
-public function cart()
-{
-    $cart = Session::get('cart', []);
-    $selectedArticles = collect($cart)->map(function ($item, $id) {
-        return Article::find($id);
-    });
-    return view('cart', compact('selectedArticles'));
-}
-
-
-
-
-
-public function removeFromCart(Article $article)
-{
-    $cart = Session::get('cart', []);
-
-    if (array_key_exists($article->id, $cart)) {
-        unset($cart[$article->id]);
-        Session::put('cart', $cart);
-        // Add debugging statements to check cart data
-        dd($cart); // This will show the updated cart data
-        return redirect()->route('cart')->with('success', 'Article supprimé du panier avec succès !');
+    // Process the sale based on the selected payment method
+    if ($validData['payment_method'] === 'multiple') {
+        // Handle the case of a partial payment with credit card and the rest by cash
+        // Access the data via $validData, e.g., $validData['other_payment_method'], $validData['other_payment_amount'], $validData['other_payment_comment']
     } else {
-        return redirect()->route('cart')->with('error', 'L\'article n\'existe pas dans le panier.');
+        // Handle other payment methods (chèque, espèces, carte bancaire)
     }
+
+    // Redirect to a success page or wherever is appropriate
+    return redirect()->route('sales.index')->with('success', 'Vente enregistrée !');
 }
 
 
-public function update(Request $request)
+    public function removeFromCart($id)
+    {
+        $cart = Session::get('cart', []);
+        if (array_key_exists($id, $cart)) {
+            unset($cart[$id]);
+            Session::put('cart', $cart);
+            return redirect()->route('cart')->with('success', 'Article supprimé du panier avec succès !');
+        } else {
+            return redirect()->route('cart')->with('error', 'L\'article n\'existe pas dans le panier.');
+        }
+    }
+
+
+    public function updateCart(Request $request)
 {
     // Process updates to the cart, for example, updating quantities and prices
     // You can access data from the form submission via $request
@@ -140,6 +171,7 @@ public function update(Request $request)
     return Redirect::route('cart')->with('success', 'Panier mis à jour avec succès !');
 }
 
+
 public function confirmPurchase(Request $request)
 {
     // Validate the request
@@ -156,4 +188,7 @@ public function confirmPurchase(Request $request)
 
     // Redirect to a success page or wherever is appropriate
     return redirect()->route('sales.index')->with('success', 'Vente confirmée!');
+}
+
+
 }

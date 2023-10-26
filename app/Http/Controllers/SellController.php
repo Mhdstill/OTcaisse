@@ -82,25 +82,6 @@ class SellController extends Controller
         return view('cart', compact('selectedArticles', 'totalPrice'));
     }
 
-
-    public function cart()
-    {
-        $cart = Session::get('cart', []);
-        $selectedArticles = collect($cart)->map(function ($item, $id) use ($cart) {
-            $article = Article::find($id);
-            if (!$article) {
-                unset($cart[$id]);
-                Session::put('cart', $cart);
-            }
-            return $article;
-        });
-    
-        return view('cart', compact('selectedArticles'));
-    }
-    
-    
-
-
 public function checkout(Request $request)
 {
     $validData = $request->validate([
@@ -200,32 +181,3 @@ public function confirmPurchase(Request $request)
     return redirect()->route('cart')->with('success', 'La vente a bien été enregistrée');
 }
 
-public function statistics()
-{
-    // Get the total number of sales per day
-    $totalSalesPerDay = Sale::selectRaw('date(created_at) as date, count(*) as count')
-        ->groupBy('date')
-        ->get();
-
-    // Get the total number of sales per article
-    $totalSalesPerArticle = Sale::selectRaw('article_id, count(*) as count')
-        ->groupBy('article_id')
-        ->get();
-
-    // Get the total number of sales per category
-    $totalSalesPerCategory = Sale::join('articles', 'sales.article_id', '=', 'articles.id')
-        ->join('categories', 'articles.category_id', '=', 'categories.id')
-        ->selectRaw('categories.name, count(*) as count')
-        ->groupBy('categories.name')
-        ->get();
-
-    // Get the total number of sales per period
-    $totalSalesPerPeriod = Sale::selectRaw('period(created_at) as period, count(*) as count')
-        ->groupBy('period')
-        ->get();
-
-    return view('statistics', compact('totalSalesPerDay', 'totalSalesPerArticle', 'totalSalesPerCategory', 'totalSalesPerPeriod'));
-}
-
-
-}

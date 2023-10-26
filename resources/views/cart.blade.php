@@ -15,25 +15,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($selectedArticles as $article)
+                    @for ($i = 0; $i < count($selectedArticles); $i++)
                         <tr>
-                            <td class="border px-4 py-2">{{ $article->id ?? 'N/A' }}</td>
-                            <td class="border px-4 py-2">{{ $article->title }}</td>
+                            <td class="border px-4 py-2">{{ $selectedArticles[$i]->id ?? 'N/A' }}</td>
+                            <td class="border px-4 py-2">{{ $selectedArticles[$i]->title }}</td>
                             <td class="border px-4 py-2">
-                                <input type="text" name="price_{{ $article->id }}" value="{{ $article->price }}"
-                                    class="w-20 price rounded-xl border-2" data-article-id="{{ $article->id }}"
-                                    onchange="updatePrice({{ $article->id }})"> €
+                                <input type="text" name="price_{{ $selectedArticles[$i]->id }}"
+                                    value="{{ $selectedArticles[$i]->price }}" class="w-20 price rounded-xl border-2"
+                                    data-article-id="{{ $selectedArticles[$i]->id }}"
+                                    onchange="updatePrice({{ $selectedArticles[$i]->id }})"> €
                             </td>
                             <td class="border px-4 py-2">
-                                <input type="number" name="quantity_{{ $article->id }}" value="1"
-                                    class="w-16 quantity rounded-xl border-2" data-article-id="{{ $article->id }}"
-                                    onchange="updateTotal({{ $article->id }})">
+                                <input type="number" name="quantity_{{ $selectedArticles[$i]->id }}" value="1"
+                                    class="w-16 quantity rounded-xl border-2"
+                                    data-article-id="{{ $selectedArticles[$i]->id }}"
+                                    onchange="updateTotal({{ $selectedArticles[$i]->id }})">
                             </td>
-                            <td class="border px-4 py-2 total_{{ $article->id }}">
-                                {{ $article->price * $article->quantity }} €
+                            <td class="border px-4 py-2 total_{{ $selectedArticles[$i]->id }}">
+                                {{ $selectedArticles[$i]->price * $selectedArticles[$i]->quantity }} €
                             </td>
                             <td class="border px-4 py-2">
-                                <form method="POST" action="{{ route('removeFromCart', $article->id) }}">
+                                <form method="POST"
+                                    action="{{ route('removeFromCart', ['article' => $selectedArticles[$i]->id, 'sale' => $sales[$i]->id]) }}">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
@@ -41,9 +44,10 @@
                                         Supprimer
                                     </button>
                                 </form>
+
                             </td>
                         </tr>
-                    @endforeach
+                    @endfor
                 </tbody>
             </table>
         </form>

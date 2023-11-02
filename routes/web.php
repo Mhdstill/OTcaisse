@@ -38,6 +38,7 @@ Route::middleware([
     // Cart routes
     Route::post('/addtocart', [SellController::class, 'addToCart'])->name('addtocart');
     Route::post('/updatecart', [SellController::class, 'updateCart'])->name('updatecart');
+    
     Route::delete('/removeFromCart/{article}/{sale}', [SellController::class, 'removeFromCart'])->name('removeFromCart');
     Route::post('/confirmpurchase', [SellController::class, 'confirmPurchase'])->name('confirmPurchase');
 

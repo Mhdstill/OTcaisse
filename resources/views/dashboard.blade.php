@@ -1,15 +1,15 @@
 <x-app-layout>
-    <form method="POST" action="{{ route('addtocart') }}">
-        @csrf
-        <div class="max-w-none mx-auto gap-4 space-y-1 font-paragraph">
-            @foreach ($categories as $category)
-                <div class="flex items-center p-2 gap-4" style="background-color: {{ $category->color }}">
-                    <div class="font-semibold text-xl">
-                        {{ $category->name }}
-                    </div>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach ($category->articles as $article)
-                            @if ($article->status != 'inactif')
+    <div class="max-w-none mx-auto gap-4 space-y-1 font-paragraph">
+        @foreach ($categories as $category)
+            <div class="flex items-center p-2 gap-4" style="background-color: {{ $category->color }}">
+                <div class="font-semibold text-xl">
+                    {{ $category->name }}
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    @foreach ($category->articles as $article)
+                        @if ($article->status != 'inactif')
+                            <form method="POST" action="{{ route('addtocart', ['articleId' => $article->id]) }}">
+                                @csrf
                                 <label class="shadow-xl hover:shadow flex items-center justify-between rounded-md p-2 transition-all duration-300">
                                     <input type="checkbox" class='rounded-xl border-2' name="selected_articles[]" value="{{ $article->id }}">
                                     <div class="">
@@ -26,16 +26,16 @@
                                         </div>
                                     </div>
                                 </label>
-                            @endif
-                        @endforeach
-                    </div>
+                            </form>
+                        @endif
+                    @endforeach
                 </div>
-            @endforeach
-        </div>
-        <div class="text-center mt-8 mflex items-center">
-            <button type="submit" class="font-match border-2 border-teal-600 text-black hover:bg-teal-600 rounded-xl p-2">
-                Valider la sélection
-            </button>
-        </div>
-    </form>
+            </div>
+        @endforeach
+    </div>
+    <div class="text-center mt-8 mflex items-center">
+        <button type="submit" class="font-match border-2 border-teal-600 text-black hover:bg-teal-600 rounded-xl p-2">
+            Valider la sélection
+        </button>
+    </div>
 </x-app-layout>

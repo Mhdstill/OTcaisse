@@ -1,6 +1,8 @@
 <x-app-layout>
     <div class="m-10 mt-12 border-8 rounded-lg border-teal-600">
         <h1 class="text-3xl text-lobster text-black mt-4 ml-4 mb-4">Votre panier</h1>
+        <form method="POST" action="{{ route('updatecart') }}">
+            @csrf
             <table class="table-auto w-full mb-6">
                 <thead>
                     <tr class="px-4 py-3 border-gray-400">
@@ -13,37 +15,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @for ($i = 0; $i < count($selectedArticles); $i++)
+                    @foreach ($selectedArticles as $article)
                         <tr>
-                            <td class="border px-4 py-2">{{ $selectedArticles[$i]->id ?? 'N/A' }}</td>
-                            <td class="border px-4 py-2">{{ $selectedArticles[$i]->title }}</td>
+                            <td class="border px-4 py-2">{{ $article->id ?? 'N/A' }}</td>
+                            <td class="border px-4 py-2">{{ $article->title }}</td>
                             <td class="border px-4 py-2">
-                                <form method="POST" action="{{ route('updatecart') }}">
-                                    @csrf
-                                    <input type="text" name="price_{{ $selectedArticles[$i]->id }}"
-                                        value="{{ $selectedArticles[$i]->price }}" class="w-20 price rounded-xl border-2"
-                                        data-article-id="{{ $selectedArticles[$i]->id }}"
-                                        onchange="updatePrice({{ $selectedArticles[$i]->id }})"> €
-                                </form>
+                                <input type="text" name="price_{{ $article->id }}" value="{{ $article->price }}"
+                                    class="w-20 price rounded-xl border-2" data-article-id="{{ $article->id }}"
+                                    onchange="updatePrice({{ $article->id }})"> €
                             </td>
                             <td class="border px-4 py-2">
-                                <form method="POST" action="{{ route('updatecart') }}">
-                                    @csrf
-                                    <input type="number" name="quantity_{{ $selectedArticles[$i]->id }}" value="1"
-                                        class="w-16 quantity rounded-xl border-2"
-                                        data-article-id="{{ $selectedArticles[$i]->id }}"
-                                        onchange="updateTotal({{ $selectedArticles[$i]->id }})">
-                                </form>
+                                <input type="number" name="quantity_{{ $article->id }}" value="1"
+                                    class="w-16 quantity rounded-xl border-2" data-article-id="{{ $article->id }}"
+                                    onchange="updateTotal({{ $article->id }})">
                             </td>
-                            <td class="border px-4 py-2 total_{{ $selectedArticles[$i]->id }}">
-                                {{ $selectedArticles[$i]->price * $selectedArticles[$i]->quantity }} €
+                            <td class="border px-4 py-2 total_{{ $article->id }}">
+                                {{ $article->price * $article->quantity }} €
                             </td>
                             <td class="border px-4 py-2">
-                                <form method="POST"
-                                    action="{{ route('removeFromCart', ['article' => $selectedArticles[$i]->id, 'sale' => $sales[$i]->id]) }}">
+                                <form method="POST" action="{{ route('removeFromCart', $article->id) }}">
                                     @csrf
                                     @method('DELETE')
-                                    {{ var_dump($sales[$i]->id) }}
                                     <button type="submit"
                                         class="border-red-400 border-2 rounded-xl hover-bg-red-400 text-black font-bold py-2 px-4">
                                         Supprimer
@@ -51,10 +43,11 @@
                                 </form>
                             </td>
                         </tr>
-                    @endfor
+                    @endforeach
                 </tbody>
             </table>
-    <div class="text-start pl-4 mt-8 mr-12 mb-8">
+        </form>
+        <div class="text-start pl-4 mt-8 mr-12 mb-8">
             <a href="{{ route('dashboard') }}"
                 class="border-teal-600 border-2 rounded-xl hover-bg-teal-600 text-black font-bold py-2 px-4">
                 Ajouter d'autres articles

@@ -33,17 +33,17 @@ Route::middleware([
 
     // New sale routes
     Route::get('/nouvelle-vente/{article}', [SellController::class, 'create'])->name('create');
-    Route::post('/addtosale', [SellController::class,'store'])->name('addtosale');
+    Route::post('addtosale/{article}', [SellController::class,'store'])->name('addtosale');
 
     // Cart routes
     Route::post('/addtocart', [SellController::class, 'addToCart'])->name('addtocart');
     Route::post('/updatecart', [SellController::class, 'updateCart'])->name('updatecart');
-    
-    Route::delete('/removeFromCart/{article}/{sale}', [SellController::class, 'removeFromCart'])->name('removeFromCart');
+    Route::delete('/cart/remove/{article}', [SellController::class, 'removeFromCart'])->name('removeFromCart');
     Route::post('/confirmpurchase', [SellController::class, 'confirmPurchase'])->name('confirmPurchase');
+    Route::get('/cart', [SellController::class, 'cart'])->name('cart');
 
     // Statistics routes
-    // Route::get('/statistics', [SellController::class, 'statistics'])->name('statistics');
+    Route::get('/statistics', [SellController::class, 'statistics'])->name('statistics');
 });
 
 // index affiche la liste des ventes actives.

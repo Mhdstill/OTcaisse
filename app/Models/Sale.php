@@ -10,8 +10,9 @@ class Sale extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'payment_method',
-        'status',
-        'commentary'
+        'cash_payment',
+        'credit_card_payment',
+        'check_payment',
+
     ];
 }

@@ -13,12 +13,9 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('article_id');
-            $table->integer('quantity');
-            $table->decimal('price', 15, 2);
-            $table->enum('payment_method',['cash','credit_card','check']);
-            $table->enum('status',['active','done'])->default('active');
-            $table->text('commentary')->nullable();
+            $table->string('cash_payment')->nullable();
+            $table->string('credit_card_payment')->nullable();
+            $table->string('check_payment')->nullable();
             $table->timestamps();
         });
     }

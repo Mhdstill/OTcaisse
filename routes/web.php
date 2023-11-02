@@ -33,7 +33,7 @@ Route::middleware([
 
     // New sale routes
     Route::get('/nouvelle-vente/{article}', [SellController::class, 'create'])->name('create');
-    Route::post('addtosale/{article}', [SellController::class,'store'])->name('addtosale');
+    Route::post('/addtosale', [SellController::class,'store'])->name('addtosale');
 
     // Cart routes
     Route::post('/addtocart', [SellController::class, 'addToCart'])->name('addtocart');

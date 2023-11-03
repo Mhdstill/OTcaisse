@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Sale;
 use App\Models\Article;
 use App\Models\Category;
+use Darryldecode\Cart\Cart;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request; // Correct the Request import
@@ -14,9 +15,11 @@ class SellController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('articles')->get();
-        return view('dashboard', compact('categories'));
+      $categories = Category::with('articles')->get();
+      return view('dashboard', compact('categories'));
     }
+    
+    
 
     public function create(Article $article)
     {
@@ -122,7 +125,12 @@ public function checkout(Request $request)
         }
     }
 
-
+    public function removeArticle(Request $request)
+    {
+        
+        Cart::instance('cart')->update($request->rowId, $request-quantity);
+        return redirect()->route('cart');
+    }
     public function updateCart(Request $request)
 {
     // Process updates to the cart, for example, updating quantities and prices
@@ -180,4 +188,11 @@ public function confirmPurchase(Request $request)
     // Redirect to the cart page and flash a success message
     return redirect()->route('cart')->with('success', 'La vente a bien été enregistrée');
 }
+
+public function cart()
+{
+   $cart = Session::get('cart', []);
+   return view('cart', compact('cart'));
+}
+
 }

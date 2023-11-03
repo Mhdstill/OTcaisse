@@ -33,9 +33,9 @@
                                 {{ $article->price * $article->quantity }} €
                             </td>
                             <td class="border px-4 py-2">
-                                <form method="POST" action="{{ route('removeFromCart', $article->id) }}">
+                                <form method="GET" action="{{ route('removeFromCart', $article->id) }}">
                                     @csrf
-                                    @method('DELETE')
+                                    @method('PUT')
                                     <button type="submit"
                                         class="border-red-400 border-2 rounded-xl hover-bg-red-400 text-black font-bold py-2 px-4">
                                         Supprimer
@@ -46,13 +46,12 @@
                     @endforeach
                 </tbody>
             </table>
-        </form>
-        <div class="text-start pl-4 mt-8 mr-12 mb-8">
-            <a href="{{ route('dashboard') }}"
-                class="border-teal-600 border-2 rounded-xl hover-bg-teal-600 text-black font-bold py-2 px-4">
-                Ajouter d'autres articles
-            </a>
-        </div>
+            <div class="text-start pl-4 mt-8 mr-12 mb-8">
+                <a href="{{ route('dashboard') }}"
+                    class="border-teal-600 border-2 rounded-xl hover-bg-teal-600 text-black font-bold py-2 px-4">
+                    Ajouter d'autres articles
+                </a>
+            </div>
 
     </div>
 
@@ -105,15 +104,13 @@
         </button>
     </form>
 
-
-
-    <!-- Bouton retour Caisse -->
+    {{-- <!-- Bouton retour Caisse -->
     <div class="text-start pl-4 mt-8 mr-12">
         <a href="{{ route('dashboard') }}"
             class="border-teal-600 border-2 rounded-xl hover-bg-teal-600 text-black font-bold py-2 px-4">
             Revenir à la caisse
         </a>
-    </div>
+    </div> --}}
 
     <script>
         // Add an event listener to the checkboxes to show the payment options individually

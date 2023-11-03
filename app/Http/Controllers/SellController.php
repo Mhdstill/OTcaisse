@@ -1,198 +1,55 @@
 <?php
 
-namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SellController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CategoryController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+})->name('welcome');
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/caisse', [SellController::class, 'index'])->name('dashboard');
+
+    Route::resource('articles', ArticleController::class);
+    Route::resource('categories', CategoryController::class);
 
 
-use App\Models\Sale;
-use App\Models\Article;
-use App\Models\Category;
-use Darryldecode\Cart\Cart;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Http\Request; // Correct the Request import
+    // New sale routes
+    Route::get('/nouvelle-vente/{article}', [SellController::class, 'create'])->name('create');
+    Route::post('addtosale/{article}', [SellController::class,'store'])->name('addtosale');
 
-class SellController extends Controller
-{
-    public function index()
-    {
-      $categories = Category::with('articles')->get();
-      return view('dashboard', compact('categories'));
-    }
-    
-    
+    // Cart routes
+    Route::post('/addtocart', [SellController::class, 'addToCart'])->name('addtocart');
+    Route::post('/updatecart', [SellController::class, 'updateCart'])->name('updatecart');
+    Route::delete('/cart/remove/{article}', [SellController::class, 'removeFromCart'])->name('removeFromCart');
+    Route::post('/confirmpurchase', [SellController::class, 'confirmPurchase'])->name('confirmPurchase');
+    Route::get('/cart', [SellController::class, 'cart'])->name('cart');
 
-    public function create(Article $article)
-    {
-        $articles = Article::all();
-        return view('cart', compact('article', 'articles'));
-    }
+    // Statistics routes
+    Route::get('/statistics', [SellController::class, 'statistics'])->name('statistics');
+});
 
-    public function store(Request $request, Article $article)
-    {
-        $validData = $request->validate([
-            'quantity' => 'required|integer|min:1',
-            'price' => 'required|numeric',
-            'payment_method' => 'required|array',
-            'commentary' => 'nullable|string',
-        ]);
-    
-        $sale = new Sale;
-        $sale->article_id = $article->id;
-        $sale->quantity = $validData['quantity'];
-        $sale->price = $validData['price'];
-    
-        if (in_array('multiple', $validData['payment_method'])) {
-            $validData = $request->validate([
-                'other_payment_method' => 'required|string|in:credit_card,cash,chq',
-                'other_payment_amount' => 'required|numeric',
-                'other_payment_comment' => 'nullable|string',
-            ]);
-            $sale->payment_method = $validData['other_payment_method'];
-    
-            // Determine the specific commentary field based on the selected payment method
-            if ($validData['other_payment_method'] === 'credit_card') {
-                $sale->commentary = $validData['other_payment_comment'];
-            } elseif ($validData['other_payment_method'] === 'cash') {
-                $sale->commentary = $validData['other_payment_comment'];
-            } elseif ($validData['other_payment_method'] === 'chq') {
-                $sale->commentary = $validData['other_payment_comment'];
-            }
-        } else {
-            $sale->payment_method = $validData['payment_method'][0];
-            $sale->commentary = $request->input('commentary');
-        }
-    
-        $sale->status = 'active';
-        $sale->save();
-    
-        return redirect()->route('sales.index')->with('success', 'Vente enregistrée !');
-    }
-    
-
-
-    public function addToCart(Request $request)
-    {
-        $selectedArticleIds = $request->input('selected_articles');
-
-        if ($selectedArticleIds) {
-            $selectedArticles = Article::whereIn('id', $selectedArticleIds)->get();
-        } else {
-            $selectedArticles = collect();
-        }
-
-        $totalPrice = $selectedArticles->sum('price');
-
-        return view('cart', compact('selectedArticles', 'totalPrice'));
-    }
-
-public function checkout(Request $request)
-{
-    $validData = $request->validate([
-        'payment_method' => 'required|string',
-        'commentary' => 'nullable|string',
-    ]);
-
-    if ($validData['payment_method'] === 'multiple') {
-        $validData = $request->validate([
-            'other_payment_method' => 'required|string|in:credit_card,cash',
-            'other_payment_amount' => 'required|numeric',
-            'other_payment_comment' => 'nullable|string',
-        ]);
-    }
-
-    // Process the sale based on the selected payment method
-    if ($validData['payment_method'] === 'multiple') {
-        // Handle the case of a partial payment with credit card and the rest by cash
-        // Access the data via $validData, e.g., $validData['other_payment_method'], $validData['other_payment_amount'], $validData['other_payment_comment']
-    } else {
-        // Handle other payment methods (chèque, espèces, carte bancaire)
-    }
-
-    // Redirect to a success page or wherever is appropriate
-    return redirect()->route('sales.index')->with('success', 'Vente enregistrée !');
-}
-
-
-    public function removeFromCart($id)
-    {
-        $cart = Session::get('cart', []);
-        if (array_key_exists($id, $cart)) {
-            unset($cart[$id]);
-            Session::put('cart', $cart);
-            return redirect()->route('cart')->with('success', 'Article supprimé du panier avec succès !');
-        } else {
-            return redirect()->route('cart')->with('error', 'L\'article n\'existe pas dans le panier.');
-        }
-    }
-
-    public function removeArticle(Request $request)
-    {
-        
-        Cart::instance('cart')->update($request->rowId, $request-quantity);
-        return redirect()->route('cart');
-    }
-    public function updateCart(Request $request)
-{
-    // Process updates to the cart, for example, updating quantities and prices
-    // You can access data from the form submission via $request
-
-    // Example: Updating a specific article's quantity and price
-    $articleId = $request->input('articleId');
-    $newQuantity = $request->input('quantity');
-    $newPrice = $request->input('price');
-
-    $cart = Session::get('cart', []);
-
-    // Si la quantité est zéro, supprimez l'article du panier
-    if ($newQuantity == 0) {
-        unset($cart[$articleId]);
-    } else {
-        // Sinon, mettez à jour l'article dans le panier
-        $cart[$articleId] = [
-            'quantity' => $newQuantity,
-            'price' => $newPrice,
-        ];
-    }
-
-    // Enregistrez le panier mis à jour dans la session
-    Session::put('cart', $cart);
-
-    return Redirect::route('cart')->with('success', 'Panier mis à jour avec succès !');
-}
-
-
-public function confirmPurchase(Request $request)
-{
-    // Validate the request
-    $validData = $request->validate([
-        'sale_id' => 'required|integer|exists:sales,id',
-    ]);
-
-    // Find the sale
-    $sale = Sale::find($validData['sale_id']);
-
-    // Confirm the purchase
-    $sale->status = 'confirmed';
-    $sale->save();
-
-    // Update the quantity of the sold articles
-    $soldArticles = Session::get('cart', []);
-    foreach ($soldArticles as $articleId => $article) {
-        $articleModel = Article::find($articleId);
-        if ($articleModel) {
-            $articleModel->quantity -= $article['quantity'];
-            $articleModel->save();
-        }
-    }
-
-    // Redirect to the cart page and flash a success message
-    return redirect()->route('cart')->with('success', 'La vente a bien été enregistrée');
-}
-
-public function cart()
-{
-   $cart = Session::get('cart', []);
-   return view('cart', compact('cart'));
-}
-
-}
+// index affiche la liste des ventes actives.
+// create affiche le formulaire de création d'une nouvelle vente.
+// store crée une nouvelle vente dans la base de données à partir des données du formulaire.
+// show affiche les détails d'une vente spécifique.
+// edit affiche le formulaire de modification d'une vente existante.
+// update met à jour une vente existante dans la base de données à partir des données du formulaire.
+// destroy supprime une vente de la base de données.

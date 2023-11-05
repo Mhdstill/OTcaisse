@@ -86,23 +86,27 @@ class SellController extends Controller
     }
 
 
-        public function removeFromCart($Request, $request)
-        {
-            if($request->id) {
-                $cart = session()->get('cart');
-               if(isset($cart[$request->id])) {
-                    unset($cart[$request->id]);
-                    session()->put('cart', $cart);
-                }
-
-
-                session()->flash('success', 'L\article a été retiré du panier !');
-
-                // return back()->with('status','Quantity is Increased');
-                return view('cart', compact('selectedArticles', 'totalPrice', 'sales'));
-
-            }
+    public function removeFromCart($articleId)
+    {
+        $cart = session()->get('cart');
+        if (isset($cart[$articleId])) {
+            unset($cart[$articleId]);
+            session()->put('cart', $cart);
         }
+    
+        session()->flash('success', "L'article a été retiré du panier !");
+    
+        // Retrieve the updated cart data and other required data
+        $selectedArticles = Article::whereIn('id', array_keys($cart))->get();
+        $totalPrice = $selectedArticles->sum(function ($article) use ($cart) {
+            return $article->price * $cart[$article->id]['quantity'];
+        });
+        $sales = []; // You may need to populate this if it's used in your cart view
+    
+        // Return the cart view with the updated data
+        return view('cart', compact('selectedArticles', 'totalPrice', 'sales'));
+    }
+    
 
 
 

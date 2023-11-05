@@ -38,7 +38,9 @@ Route::middleware([
     // Cart routes
     Route::post('/addtocart', [SellController::class, 'addToCart'])->name('addtocart');
     Route::post('/updatecart', [SellController::class, 'updateCart'])->name('updatecart');
-    Route::delete('/cart/remove/{article}', [SellController::class, 'removeFromCart'])->name('removeFromCart');
+    Route::delete('/removeFromCart/{articleId}', [SellController::class, 'removeFromCart'])->name('removeFromCart');
+
+    // Route::put('/cart/remove/{article}', [SellController::class, 'removeFromCart'])->name('removeFromCart');
     Route::post('/confirmpurchase', [SellController::class, 'confirmPurchase'])->name('confirmPurchase');
     Route::get('/cart', [SellController::class, 'cart'])->name('cart');
 

@@ -55,7 +55,7 @@
     <div name="options" class="flex justify-center items-center">
 
         <a href="{{ route('dashboard') }}"
-            class="border-emerald-300 border-2 hover:bg-emerald-300 text-black font-bold py-2 px-4">
+            class="border-emerald-300 border-2 hover:bg-emerald-300 text-black font-bold py-2 px-2 mr-4">
             Ajouter d'autres articles
         </a>
 

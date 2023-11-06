@@ -1,7 +1,7 @@
-<nav x-data="{ open: false }" class="bg-gray-100 dark:bg-gray-100 mb-4 pt-4">
+<nav x-data="{ open: false }" class="bg-gray-50 dark:bg-gray-50 mb-4 pt-4">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-24">
             <div class="flex">
                 <!-- Logo -->
                 
@@ -99,7 +99,7 @@
 
                         <x-slot name="content">
                             <!-- Account Management -->
-                            <div class="block px-4 py-2 text-xs text-gray-400">
+                            <div class="block px-4 py-2 text-xs text-emerald-300">
                                 {{ __('Manage Account') }}
                             </div>
 

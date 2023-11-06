@@ -33,15 +33,15 @@
                                 {{ $article->price * $article->quantity }} €
                             </td>
                             <td class="px-2 py-2 flex justify-center items-center">
-                                <form method="POST" action="{{ route('removeFromCart', $article->id) }}">
+                                <form method="POST" action="{{ route('updatecart') }}">
                                     @csrf
-                                    @method('DELETE')
+                                    <input type="hidden" name="articleId" value="{{ $article->id }}">
+                                    <input type="hidden" name="quantity" value="0">
                                     <button type="submit"
                                         class="border-red-400 text-center hover:text-white hover:bg-red-600 text-red-600 font-bold py-2 px-4">
                                         X
                                     </button>
                                 </form>
-
                             </td>
                         </tr>
                     @endforeach

@@ -7,80 +7,113 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Redirect;
 
 class SellController extends Controller
 {
     public function index()
     {
         $categories = Category::with('articles')->get();
-        $selectedArticles = session('selectedArticles', []);
-        $total = 0;
-        foreach ($selectedArticles as $article) {
-        $total += $article->price;
-        }
-    return view('dashboard', compact('categories', 'total'));
+        return view('dashboard', compact('categories'));
     }
 
-
-    // public function create(Article $article)
-    // {
-    //     $articles = Article::all();
-    //     $sale = new Sale;
-    //     return view('cart', compact('article', 'articles', 'sale'));
-    // }
-
-    public function add(Request $request, Article $article)
-{
-    $selectedArticles = $request->session()->get('selectedArticles', []);
-    if (isset($selectedArticles[$article->id])) {
-        $selectedArticles[$article->id]->quantity += 1;
-    } else {
-        $article->quantity = 1;
-        $selectedArticles[$article->id] = $article;
-    }
-    $request->session()->put('selectedArticles', $selectedArticles);
-    return redirect()->back();
-}
-public function remove(Request $request, Article $article)
-{
-    $selectedArticles = $request->session()->get('selectedArticles', []);
-    if (isset($selectedArticles[$article->id]) && $selectedArticles[$article->id]->quantity > 1) {
-        $selectedArticles[$article->id]->quantity -= 1;
-    } else {
-        unset($selectedArticles[$article->id]);
-    }
-    $request->session()->put('selectedArticles', $selectedArticles);
-    return redirect()->back();
-}
-public function update(Request $request, Article $article)
-{
-    $selectedArticles = $request->session()->get('selectedArticles', []);
-    if (isset($selectedArticles[$article->id])) {
-        $selectedArticles[$article->id]->quantity = $request->quantity;
-    }
-    $request->session()->put('selectedArticles', $selectedArticles);
-    return redirect()->back();
-}
-
-    public function confirm(Request $request)
+    public function create(Article $article)
     {
-        $selectedArticles = $request->session()->get('selectedArticles', []);
-        return view('confirm', compact('selectedArticles'));
+        $articles = Article::all();
+        return view('cart', compact('article', 'articles'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Article $article)
     {
-        $selectedArticles = $request->session()->get('selectedArticles', []);
-        foreach ($selectedArticles as $article) {
-            Sale::create([
-                'article_id' => $article->id,
-                'quantity' => $article->quantity,
-                'price' => $article->price,
-                'payment_method' => $request->payment_method,
-                'status' => 'completed',
-            ]);
-        }
-        $request->session()->forget('selectedArticles');
-        return redirect()->route('success');
+        $validData = $request->validate([
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric',
+            'payment_method' => 'required|array',
+            'commentary' => 'nullable|string',
+        ]);
+
+        $sale = new Sale;
+        $sale->article_id = $article->id;
+        $sale->quantity = $validData['quantity'];
+        $sale->price = $validData['price'];
+        $sale->payment_method = $validData['payment_method'][0];
+        $sale->commentary = $request->input('commentary');
+        $sale->status = 'active';
+        $sale->save();
+
+        return redirect()->route('sales.index')->with('success', 'Vente enregistrée !');
     }
+
+    public function updateCart(Request $request)
+    {
+        $articleId = $request->input('articleId');
+        $newQuantity = $request->input('quantity');
+        $newPrice = $request->input('price');
+
+        $cart = Session::get('cart', []);
+
+        if ($newQuantity == 0) {
+            unset($cart[$articleId]);
+        } else {
+            $cart[$articleId] = [
+                'quantity' => $newQuantity,
+                'price' => $newPrice,
+            ];
+        }
+
+        Session::put('cart', $cart);
+
+        return Redirect::route('cart')->with('success', 'Panier mis à jour avec succès !');
+    }
+
+    public function confirmPurchase(Request $request)
+    {
+        $validData = $request->validate([
+            'sale_id' => 'required|integer|exists:sales,id',
+        ]);
+
+        $sale = Sale::find($validData['sale_id']);
+        $sale->status = 'confirmed';
+        $sale->save();
+
+        $soldArticles = Session::get('cart', []);
+        foreach ($soldArticles as $articleId => $article) {
+            $articleModel = Article::find($articleId);
+            if ($articleModel) {
+                $articleModel->quantity -= $article['quantity'];
+                $articleModel->save();
+            }
+        }
+
+        return redirect()->route('cart')->with('success', 'La vente a bien été enregistrée');
+    }
+
+    public function addToCart(Request $request)
+{
+    $articleId = $request->input('articleId');
+    $quantity = $request->input('quantity');
+    $price = $request->input('price');
+
+    $cart = Session::get('cart', []);
+
+    if (isset($cart[$articleId])) {
+        $cart[$articleId]['quantity'] += $quantity;
+    } else {
+        $cart[$articleId] = [
+            'quantity' => $quantity,
+            'price' => $price,
+        ];
+    }
+
+    Session::put('cart', $cart);
+
+    return Redirect::route('cart')->with('success', 'Article ajouté au panier avec succès !');
+}
+    public function cart()
+{
+    $cart = Session::get('cart', []);
+    $selectedArticles = Article::whereIn('id', array_keys($cart))->get();
+    return view('cart', compact('cart', 'selectedArticles'));
+}
+
 }

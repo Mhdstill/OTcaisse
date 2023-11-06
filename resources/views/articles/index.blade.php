@@ -19,57 +19,57 @@
                     </div>
                 @endif
             </div>
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg overflow-auto">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-teal-700 dark:text-white">
                         <tr>
-                            <th scope="col" class="px-4 py-3">
+                            <th scope="col" class="px-4 py-3 whitespace-normal sm:text-lg">
                                 <div class="flex items-center">
                                     Image
                                 </div>
                             </th>
-                            <th scope="col" class="px-12 py-3">
+                            <th scope="col" class="px-12 py-3 whitespace-normal sm:text-lg">
                                 <div class="flex items-center">
                                     Titre
                                 </div>
                             </th>
-                            <th scope="col" class="px-8 py-3">
+                            <th scope="col" class="px-8 py-3 whitespace-normal sm:text-lg">
                                 <div class="flex items-center">
                                     Prix
                                 </div>
                             </th>
-                            <th scope="col" class="px-16 py-3">
+                            <th scope="col" class="px-16 py-3 whitespace-normal sm:text-lg">
                                 <div class="flex items-center">
                                     Stock
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-6 py-3 whitespace-normal">
                                 <div class="flex items-center">
                                     Alerte stock
                                 </div>
                             </th>
-                            <th scope="col" class="px-10 py-3">
+                            <th scope="col" class="px-10 py-3 whitespace-normal">
                                 <div class="flex items-center">
                                     Catégorie
                                 </div>
                             </th>
 
-                            <th scope="col" class="px-12 py-3">
+                            <th scope="col" class="px-12 py-3 whitespace-normal">
                                 <div class="flex items-center">
                                     Description
                                 </div>
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="px-6 py-3 whitespace-normal">
                                 <div class="flex items-center">
                                     Référence
                                 </div>
                             </th>
-                            <th scope="col" class="px-2 py-3">
+                            <th scope="col" class="px-2 py-3 whitespace-normal">
                                 <div class="flex items-center">
                                     Statut
                                 </div>
                             </th>
-                            <th scope="col" class="px-12 py-3">
+                            <th scope="col" class="px-12 py-3 whitespace-normal">
                                 <div class="flex items-center">
                                     Action
                                 </div>
@@ -79,7 +79,7 @@
                     <tbody>
                         @foreach ($articles as $article)
                             <tr class="bg-white border-b dark:bg-teal-600 dark:border-teal-900 dark:text-white">
-                                <td class="px-4 py-0.5">
+                                <td class="px-4 py-0.5 whitespace-normal">
                                     <img class="h-24 w-26 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
                                         src="{{ $article->image != null ? url('storage/' . $article->image) : url('img/andrew-small-unsplash.jpg') }}"
                                         alt="">

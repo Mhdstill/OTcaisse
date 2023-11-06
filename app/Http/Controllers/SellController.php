@@ -90,18 +90,17 @@ class SellController extends Controller
 
     public function addToCart(Request $request)
 {
-    $articleId = $request->input('articleId');
-    $quantity = $request->input('quantity');
-    $price = $request->input('price');
+    $selectedArticles = $request->input('selected_articles');
+        $cart = Session::get('cart', []);
 
-    $cart = Session::get('cart', []);
-
-    if (isset($cart[$articleId])) {
-        $cart[$articleId]['quantity'] += $quantity;
-    } else {
+    foreach ($selectedArticles as $articleId) {
+        $quantity = 0;
+        if(isset($cart[$articleId])) {
+            $quantity = $cart[$articleId]['quantity'];
+        }
+        $quantity++;
         $cart[$articleId] = [
             'quantity' => $quantity,
-            'price' => $price,
         ];
     }
 

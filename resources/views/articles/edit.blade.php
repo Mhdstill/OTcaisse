@@ -1,19 +1,20 @@
 <x-app-layout>
-    <div class="m-10 bg-gray-100">
-        <div class="pb-8 flex justify-start items-center">
-            <a class="border-4 border-teal-400 bg-white text-black font-paragraph rounded-xl p-2 ml-2"
-            href="{{ route('articles.index') }}">
-            Retour</a>
-        </div>
+        <div class="m-10">
+            <div class="pb-8 flex justify-start items-center">
+                
+                <a class="border-2 border-emerald-300 bg-white text-black hover:text-white hover:bg-emerald-300 p-2 ml-2"
+                    href="{{ route('articles.index') }}">
+                    Retour</a>
+            </div>
         <div class="row mt-2 font-paragraph">
-            <div class="col-lg-12 italic pb-4 text-white">
+            <div class="col-lg-12 italic pb-4 text-red-700 font-bold">
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
                         <p>{{ $message }}</p>
                     </div>
                 @endif
             </div>
-            <div class="col-lg-12 border-4 border-teal-400 p-4 rounded-xl bg-teal-800 text-black drop-shadow-2xl">
+            <div class="col-lg-12 text-red-700 font-bold">
                 @if ($errors->any())
                     <div class="alert alert-danger">
                         Il y a un problème avec votre enregistrement.<br>
@@ -104,7 +105,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="submit"
-                                class="border-4 border-teal-400 bg-white  text-gray-800 rounded-xl p-3 px-5">Envoyer</button>
+                                class="border-2 border-emerald-300 bg-white text-black hover:text-white hover:bg-emerald-300 p-3 px-5">Envoyer</button>
                         </div>
 
                     </div>

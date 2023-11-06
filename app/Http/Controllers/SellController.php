@@ -98,10 +98,6 @@ class SellController extends Controller
         if(isset($cart[$articleId])) {
             $quantity = $cart[$articleId]['quantity'];
         }
-        $quantity++;
-        $cart[$articleId] = [
-            'quantity' => $quantity,
-        ];
     }
 
     Session::put('cart', $cart);

@@ -88,6 +88,7 @@ class SellController extends Controller
         return redirect()->route('cart')->with('success', 'La vente a bien été enregistrée');
     }
 
+
     public function addToCart(Request $request)
 {
     $selectedArticles = $request->input('selected_articles');
@@ -98,12 +99,18 @@ class SellController extends Controller
         if(isset($cart[$articleId])) {
             $quantity = $cart[$articleId]['quantity'];
         }
+        $quantity++;
+        $cart[$articleId] = [
+            'quantity' => $quantity,
+        ];
     }
 
     Session::put('cart', $cart);
 
     return Redirect::route('cart')->with('success', 'Article ajouté au panier avec succès !');
 }
+
+  
     public function cart()
 {
     $cart = Session::get('cart', []);
@@ -112,3 +119,53 @@ class SellController extends Controller
 }
 
 }
+
+
+
+
+
+//     public function addToCart(Request $request)
+// {
+    // ANCIEN CODE ////////
+    //$articleId = $request->input('articleId');
+    //$quantity = $request->input('quantity');
+    //$price = $request->input('price');
+    //$cart = Session::get('cart', []);
+    //if (isset($cart[$articleId])) {
+    //    $cart[$articleId]['quantity'] += $quantity;
+    //} else {
+    //    $cart[$articleId] = [
+    //        'quantity' => $quantity,
+    //        'price' => $price,
+    //    ];
+    //}
+    //
+    //Session::put('cart', $cart);
+
+    // CODE PAUL ////////
+    // On récupère le tableau qui contient les ID des articles séléctionnés
+    // Le tableau s'appel "selected_articles" parce qu'il correspond au nom de l'input dans le formulaire (dashboard.blade.php - L14)
+    // $articleIds = $request->input('selected_articles');
+
+    // On récupère le contenu du panier de l'utilisateur (dans la session "CART")
+    // $cart = Session::get('cart', []);
+    // Dans le code que j'ai fait, on stock les articles en session de cette manière :
+    // ID ARTICLE => QUANTITE
+    // Ex : [1 => 5, 2 => 3]
+
+    // On boucle sur chaque ID d'article présent dans le tableau (= chaque article séléctionné par l'utilisateur)
+    // foreach ($articleIds as $articleId) {
+        // Si il y a déjà cet ID d'article en session, alors on incrémente sa quantité de 1
+        // Sinon, on l'ajoute au panier avec une quantité initiale de "1"
+    //     if (isset($cart[$articleId])) {
+    //         $cart[$articleId] = $cart[$articleId] + 1;
+    //     } else {
+    //         $cart[$articleId] = 1;
+    //     }
+    // }
+
+    // On met à jour notre session avec le contenu du panier de l'utilisateur
+//     Session::put('cart', $cart);
+
+//     return Redirect::route('cart')->with('success', 'Article ajouté au panier avec succès !');
+// }

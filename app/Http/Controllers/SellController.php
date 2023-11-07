@@ -6,6 +6,7 @@ use App\Models\Sale;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Redirect;
 
@@ -24,6 +25,8 @@ class SellController extends Controller
     }
 
     public function store(Request $request, Article $article)
+    // fct used to create a new sale entry in the database when a user submits a form to sell an article. 
+    // It creates a new Sale model instance and saves it to the database.
     {
         $validData = $request->validate([
             'quantity' => 'required|integer|min:1',
@@ -66,27 +69,93 @@ class SellController extends Controller
         return Redirect::route('cart')->with('success', 'Panier mis à jour avec succès !');
     }
 
-    public function confirmPurchase(Request $request)
-    {
-        $validData = $request->validate([
-            'sale_id' => 'required|integer|exists:sales,id',
-        ]);
+//     public function confirmPurchase(Request $request)
+//     // this fct is responsible 4: confirming a sale and updating the status of the sale in the database. 
+//     // It also updates the quantity of the sold articles in the Article model.
+// {
+//     $validData = $request->validate([
+//         'sale_id' => 'required|integer|exists:sales,id',
+//     ]);
 
-        $sale = Sale::find($validData['sale_id']);
-        $sale->status = 'confirmed';
-        $sale->save();
+//     $sale = Sale::find($validData['sale_id']);
+//     $sale->status = 'confirmed';
+//     $sale->save();
 
-        $soldArticles = Session::get('cart', []);
-        foreach ($soldArticles as $articleId => $article) {
-            $articleModel = Article::find($articleId);
-            if ($articleModel) {
-                $articleModel->quantity -= $article['quantity'];
-                $articleModel->save();
+//     $soldArticles = Session::get('cart', []);
+//     foreach ($soldArticles as $articleId => $article) {
+//         $articleModel = Article::find($articleId);
+//         if ($articleModel) {
+//             $articleModel->quantity -= $article['quantity'];
+//             $articleModel->save();
+//         }
+//     }
+
+//     // Clear the cart
+//     Session::forget('cart');
+
+//     return redirect()->route('dashboard')->with('success', 'La vente a bien été enregistrée');
+// }
+//  try 07 nov
+public function confirmPurchase(Request $request)
+{
+    $cart = Session::get('cart', []);
+
+    // Check if at least one payment method is selected
+    $paymentMethods = $request->input('payment_method');
+    if (empty($paymentMethods)) {
+        return redirect()->route('cart')->with('error', 'Veuillez choisir un moyen de paiement.');
+    }
+
+    DB::beginTransaction();
+
+    try {
+        foreach ($cart as $articleId => $details) {
+            $article = Article::find($articleId);
+
+            if (!$article || $article->quantity < $details['quantity']) {
+                return redirect()->route('cart')->with('error', 'Article not available in the required quantity.');
+            }
+
+            $sale = new Sale;
+            $sale->article_id = $article->id;
+            $sale->quantity = $details['quantity'];
+            $sale->price = $details['price'];
+            $sale->status = 'active';
+            $sale->save();
+
+            $article->quantity -= $details['quantity'];
+            $article->save();
+
+            // Handle payment methods
+            $paymentMethods = $request->input('payment_method');
+            foreach ($paymentMethods as $method) {
+                $amount = $request->input('amount_' . $method);
+                $comment = $request->input('comment_' . $method);
+
+                if ($amount > 0) {
+                    $payment = new Payment;
+                    $payment->sale_id = $sale->id;
+                    $payment->method = $method;
+                    $payment->amount = $amount;
+                    $payment->comment = $comment;
+                    $payment->save();
+                }
             }
         }
 
-        return redirect()->route('cart')->with('success', 'La vente a bien été enregistrée');
+        Session::forget('cart');
+
+        DB::commit();
+
+        return redirect()->route('dashboard')->with('success', 'Purchase confirmed successfully!');
+    } catch (\Exception $e) {
+        DB::rollback();
+
+        return redirect()->route('cart')->with('error', 'There was a problem confirming the purchase.');
     }
+}
+
+
 
 
     public function addToCart(Request $request)
@@ -115,7 +184,8 @@ class SellController extends Controller
 {
     $cart = Session::get('cart', []);
     $selectedArticles = Article::whereIn('id', array_keys($cart))->get();
-    return view('cart', compact('cart', 'selectedArticles'));
+    
+    return view('cart', compact('cart','selectedArticles'));
 }
 
 }

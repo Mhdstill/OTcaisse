@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="m-10 mt-12 border-2 border-red-200 shadow-md shadow-red-300">
+    <div class="m-10 mt-12 border-2 border-teal-400 shadow-md shadow-teal-400">
         <h1 class="text-3xl text-lobster text-black mt-4 ml-4 mb-6">Mon panier</h1>
         <form method="POST" action="{{ route('updatecart') }}">
             @csrf
@@ -18,7 +18,7 @@
                     @foreach ($selectedArticles as $article)
                         <tr class="text-center">
                             <td>{{ $article->id ?? 'N/A' }}</td>
-                            <td >{{ $article->title }}</td>
+                            <td>{{ $article->title }}</td>
                             <td>
                                 <input type="text" name="price_{{ $article->id }}" value="{{ $article->price }}"
                                     class="w-20 price" data-article-id="{{ $article->id }}"
@@ -55,17 +55,19 @@
     <div name="options" class="flex justify-center items-center">
 
         <a href="{{ route('dashboard') }}"
-            class="border-emerald-300 border-2 hover:bg-emerald-300 text-black font-bold py-2 px-2 mr-4">
+            class="border-teal-400 border-2 hover:bg-teal-400 text-black font-bold py-2 px-2 mr-4">
             Ajouter d'autres articles
         </a>
 
-        <form method="POST" action="{{ route('confirmPurchase') }}" class="ml-10">
+        <form method="POST" action="{{ route('confirmPurchase') }}" class="ml-10" id="confirmPurchaseForm">
             @csrf
+            {{-- <input type="hidden" name="sale_id" value="{{ $saleId }}"> --}}
             <button id="confirmPurchaseBtn" type="submit"
-                class="border-emerald-300 border-2 hover:bg-emerald-300 text-black font-bold py-2 px-4">
+                class="border-teal-400 border-2 hover:bg-teal-400 text-black font-bold py-2 px-4">
                 Valider le panier
             </button>
         </form>
+
     </div>
 
 
@@ -218,12 +220,12 @@
         // Confirm purchase button
 
         document.addEventListener("DOMContentLoaded", function() {
-            var form = document.querySelector('form[action="{{ route('confirmPurchase') }}"]');
+            var confirmPurchaseForm = document.getElementById('confirmPurchaseForm');
             var confirmPurchaseBtn = document.getElementById('confirmPurchaseBtn');
 
             confirmPurchaseBtn.addEventListener('click', function(e) {
                 e.preventDefault(); // Prevent the default form submission
-                form.submit();
+                confirmPurchaseForm.submit();
             });
         });
     </script>

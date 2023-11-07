@@ -14,7 +14,7 @@
     <div class="m-4">
 
         <div class="row mt-2 font-bold">
-            <div class="col-lg-12 italic pb-4 text-red-700 font-bold">
+            <div class="col-lg-12 italic pb-4 text-black">
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
                         <p>{{ $message }}</p>

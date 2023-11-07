@@ -18,4 +18,14 @@ class Sale extends Model
         'status',
         'commentary'
     ];
+
+    public function payments()
+{
+    return $this->hasMany(Payment::class);
 }
+
+}
+
+// one-to-many relationship between sales and payments.
+//  A sale can have many payments, but each payment is
+//  associated with one sale.

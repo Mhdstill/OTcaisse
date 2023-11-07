@@ -3,20 +3,22 @@
         @csrf
         <div class="max-w-none mx-auto gap-4 space-y-1 font-paragraph">
             @foreach ($categories as $category)
-                <div class="flex items-center p-2 gap-4">
-                    <div class="font-semibold text-xl" style="background-color: {{ $category->color }}">
+                <div class="flex items-center p-2 gap-4" style="background-color: {{ $category->color }}">
+                    <div class="font-semibold text-xl">
                         {{ $category->name }}
                     </div>
                     <div class="flex flex-wrap gap-2">
                         @foreach ($category->articles as $article)
                             @if ($article->status != 'inactif')
-                                <label class="bg-white shadow-xl hover:shadow-2xl transform hover:scale-105 flex items-center justify-between rounded-md p-2 transition-all duration-300" style="background-color: {{ $category->color }}">
-                                    <input type="checkbox" class='rounded-sm border-1' name="selected_articles[]" value="{{ $article->id }}">
-                                    <div class="">
+                                <label
+                                    class="bg-white shadow-xl hover:shadow flex items-center justify-between rounded-sm p-2 transition-all duration-300 hover:scale-95">
+                                    <input type="checkbox" class='rounded-xl border-2' name="selected_articles[]"
+                                        value="{{ $article->id }}">
+                                    {{-- <div class="">
                                         <img class="h-24 w-24 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
                                              src="{{ $article->image != null ? url('storage/' . $article->image) : url('img/andrew-small-unsplash.jpg') }}"
                                              alt="">
-                                    </div>
+                                    </div> --}}
                                     <div class="flex flex-col gap-1 items-center justify-center text-center">
                                         <div class="flex flex-col">
                                             <span class="font-semibold text-sm">{{ $article->title }}</span>

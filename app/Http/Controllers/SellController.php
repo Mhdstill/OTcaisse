@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Sale;
 use App\Models\Article;
+use App\Models\Payment;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -69,35 +70,12 @@ class SellController extends Controller
         return Redirect::route('cart')->with('success', 'Panier mis à jour avec succès !');
     }
 
-//     public function confirmPurchase(Request $request)
-//     // this fct is responsible 4: confirming a sale and updating the status of the sale in the database. 
-//     // It also updates the quantity of the sold articles in the Article model.
-// {
-//     $validData = $request->validate([
-//         'sale_id' => 'required|integer|exists:sales,id',
-//     ]);
 
-//     $sale = Sale::find($validData['sale_id']);
-//     $sale->status = 'confirmed';
-//     $sale->save();
 
-//     $soldArticles = Session::get('cart', []);
-//     foreach ($soldArticles as $articleId => $article) {
-//         $articleModel = Article::find($articleId);
-//         if ($articleModel) {
-//             $articleModel->quantity -= $article['quantity'];
-//             $articleModel->save();
-//         }
-//     }
-
-//     // Clear the cart
-//     Session::forget('cart');
-
-//     return redirect()->route('dashboard')->with('success', 'La vente a bien été enregistrée');
-// }
-//  try 07 nov
 public function confirmPurchase(Request $request)
+
 {
+    dd($request->all());
     $cart = Session::get('cart', []);
 
     // Check if at least one payment method is selected
@@ -113,7 +91,7 @@ public function confirmPurchase(Request $request)
             $article = Article::find($articleId);
 
             if (!$article || $article->quantity < $details['quantity']) {
-                return redirect()->route('cart')->with('error', 'Article not available in the required quantity.');
+                return redirect()->route('cart')->with('error', 'Article indisponible dans la quantité souhaitée.');
             }
 
             $sale = new Sale;
@@ -131,6 +109,14 @@ public function confirmPurchase(Request $request)
             foreach ($paymentMethods as $method) {
                 $amount = $request->input('amount_' . $method);
                 $comment = $request->input('comment_' . $method);
+                $request->input('amount_cb');
+                $request->input('comment_cb');
+                $request->input('amount_especes');
+                $request->input('comment_especes');
+                $request->input('amount_chq');
+                $request->input('comment_chq');
+
+
 
                 if ($amount > 0) {
                     $payment = new Payment;
@@ -147,11 +133,11 @@ public function confirmPurchase(Request $request)
 
         DB::commit();
 
-        return redirect()->route('dashboard')->with('success', 'Purchase confirmed successfully!');
+        return redirect()->route('dashboard')->with('success', 'Vente enregistrée avec succès!');
     } catch (\Exception $e) {
         DB::rollback();
 
-        return redirect()->route('cart')->with('error', 'There was a problem confirming the purchase.');
+        return redirect()->route('cart')->with('error', 'Oops...la vente n\'a pas été enregistrée.');
     }
 }
 

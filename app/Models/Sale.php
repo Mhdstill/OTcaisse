@@ -16,7 +16,7 @@ class Sale extends Model
         'price',
         'payment_method',
         'status',
-        'commentary'
+        'commentary',
     ];
 
     public function payments()

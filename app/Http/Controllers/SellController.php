@@ -136,7 +136,7 @@ public function confirmPurchase(Request $request)
         return redirect()->route('dashboard')->with('success', 'Vente enregistrée avec succès!');
     } catch (\Exception $e) {
         DB::rollback();
-        dd($e);
+        // dd($e);
 
         return redirect()->route('cart')->with('error', 'Oops...la vente n\'a pas été enregistrée.');
     }
@@ -184,23 +184,9 @@ public function addToCart(Request $request)
 
 //     public function addToCart(Request $request)
 // {
-    // ANCIEN CODE ////////
-    //$articleId = $request->input('articleId');
-    //$quantity = $request->input('quantity');
-    //$price = $request->input('price');
-    //$cart = Session::get('cart', []);
-    //if (isset($cart[$articleId])) {
-    //    $cart[$articleId]['quantity'] += $quantity;
-    //} else {
-    //    $cart[$articleId] = [
-    //        'quantity' => $quantity,
-    //        'price' => $price,
-    //    ];
-    //}
-    //
-    //Session::put('cart', $cart);
 
-    // CODE PAUL ////////
+
+ 
     // On récupère le tableau qui contient les ID des articles séléctionnés
     // Le tableau s'appel "selected_articles" parce qu'il correspond au nom de l'input dans le formulaire (dashboard.blade.php - L14)
     // $articleIds = $request->input('selected_articles');

@@ -75,7 +75,7 @@ class SellController extends Controller
 public function confirmPurchase(Request $request)
 
 {
-    dd($request->all());
+    // dd($request->all());
     $cart = Session::get('cart', []);
 
     // Check if at least one payment method is selected
@@ -136,6 +136,7 @@ public function confirmPurchase(Request $request)
         return redirect()->route('dashboard')->with('success', 'Vente enregistrée avec succès!');
     } catch (\Exception $e) {
         DB::rollback();
+        dd($e);
 
         return redirect()->route('cart')->with('error', 'Oops...la vente n\'a pas été enregistrée.');
     }
@@ -144,20 +145,21 @@ public function confirmPurchase(Request $request)
 
 
 
-    public function addToCart(Request $request)
+public function addToCart(Request $request)
 {
     $selectedArticles = $request->input('selected_articles');
         $cart = Session::get('cart', []);
 
     foreach ($selectedArticles as $articleId) {
-        $quantity = 0;
+        $article = Article::findOrFail($articleId);
         if(isset($cart[$articleId])) {
-            $quantity = $cart[$articleId]['quantity'];
+            $cart[$articleId]['quantity'] += 1;
+        } else {
+            $cart[$articleId] = [
+              'quantity' => 1,
+              'price' => $article->price,
+            ];
         }
-        $quantity++;
-        $cart[$articleId] = [
-            'quantity' => $quantity,
-        ];
     }
 
     Session::put('cart', $cart);

@@ -20,17 +20,17 @@
                             <td>{{ $article->id ?? 'N/A' }}</td>
                             <td>{{ $article->title }}</td>
                             <td>
-                                <input type="text" name="price_{{ $article->id }}" value="{{ $article->price }}"
+                                <input type="text" name="price_{{ $article->id }}" value="{{ session('cart')[$article->id]['price'] }}"
                                     class="w-20 price" data-article-id="{{ $article->id }}"
                                     onchange="updatePrice({{ $article->id }})"> €
                             </td>
                             <td class="px-4 py-2">
-                                <input type="number" name="quantity_{{ $article->id }}" value="1"
+                                <input type="number" name="quantity_{{ $article->id }}" value="{{ session('cart')[$article->id]['quantity'] }}"
                                     class="w-16 quantity" data-article-id="{{ $article->id }}"
                                     onchange="updateTotal({{ $article->id }})">
                             </td>
                             <td class="px-4 py-2 total_{{ $article->id }}">
-                                {{ $article->price * $article->quantity }} €
+                                {{ session('cart')[$article->id]['price'] * session('cart')[$article->id]['quantity'] }} €
                             </td>
                             <td class="px-2 py-2 flex justify-center items-center">
                                 <form method="POST" action="{{ route('updatecart') }}">
@@ -61,7 +61,7 @@
 
         <form method="POST" action="{{ route('confirmPurchase') }}" class="ml-2" id="confirmPurchaseForm">
             @csrf
-            <div name="moneycomestomama" class="flex flex-col items-center ml-2">
+            <div name="montantvente" class="flex flex-col items-center ml-2">
                 <div name="grandtotal">
                     <div class="px-12 py-4">
                         <span class="text-xl font-bold text-red-600">Total de la commande:</span>
@@ -140,6 +140,14 @@
             });
         });
 
+        function updateCart(articleId, price, quantity) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/updatecart', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
+            xhr.send('articleId=' + articleId + '&quantity=' + quantity + '&price=' + price);
+        }
+
 
         function updatePrice(articleId) {
             var priceInput = document.querySelector('input[name="price_' + articleId + '"]');
@@ -153,18 +161,14 @@
             // Update the total sum for all articles
             var totalPriceElement = document.getElementById('total_price');
             totalPriceElement.textContent = calculateTotalSum() + ' €';
+
+            // Update cart in Session
+            updateCart(articleId, newPrice, quantity);
         }
 
         function updateTotal(articleId) {
             // Get the new quantity
             var newQuantity = document.querySelector('input[name="quantity_' + articleId + '"]').value;
-
-            // Send an AJAX request to the server
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', '/updatecart', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            xhr.setRequestHeader('X-CSRF-TOKEN', document.querySelector('meta[name="csrf-token"]').getAttribute('content'));
-            xhr.send('articleId=' + articleId + '&quantity=' + newQuantity);
 
             // Update the total of the article
             var totalElement = document.querySelector('.total_' + articleId);
@@ -175,6 +179,9 @@
             // Update the total sum for all articles
             var totalPriceElement = document.getElementById('total_price');
             totalPriceElement.textContent = calculateTotalSum() + ' €';
+
+            // Update cart in Session
+            updateCart(articleId, price, quantity);
         }
 
         function calculateTotalSum() {
@@ -197,6 +204,7 @@
             }
         }
 
+
         function removeFromCart(articleId) {
             var xhr = new XMLHttpRequest();
             xhr.open('DELETE', '/cart/remove/' + articleId, true);
@@ -218,16 +226,5 @@
 
         }
 
-        // Confirm purchase button
-
-        document.addEventListener("DOMContentLoaded", function() {
-            var confirmPurchaseForm = document.getElementById('confirmPurchaseForm');
-            var confirmPurchaseBtn = document.getElementById('confirmPurchaseBtn');
-
-            confirmPurchaseBtn.addEventListener('click', function(e) {
-                e.preventDefault(); // Prevent the default form submission
-                confirmPurchaseForm.submit();
-            });
-        });
     </script>
 </x-app-layout>

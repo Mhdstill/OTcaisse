@@ -11,7 +11,7 @@
                         @foreach ($category->articles as $article)
                             @if ($article->status != 'inactif')
                                 <label
-                                    class="bg-white shadow-xl hover:shadow flex items-center justify-between rounded-sm p-2 transition-all duration-300 hover:scale-95">
+                                    class="bg-white rounded-md shadow-xl hover:shadow flex items-center justify-between rounded-sm p-2 transition-all duration-300 hover:scale-95">
                                     <input type="checkbox" class='rounded-xl border-2' name="selected_articles[]"
                                         value="{{ $article->id }}">
                                     {{-- <div class="">
@@ -35,7 +35,7 @@
             @endforeach
         </div>
         <div class="text-center mt-8 mflex items-center">
-            <button type="submit" class="font-match border-2 border-emerald-300 text-black hover:bg-emerald-300 p-2">
+            <button type="submit" class="font-match border-2 border-emerald-300 text-black  rounded-md hover:bg-emerald-300 p-2">
                 Valider la sélection
             </button>
         </div>

@@ -2,7 +2,7 @@
     <div class="m-10">
         <div class="pb-8 flex justify-start items-center">
 
-            <a class="border-4 border-teal-400 hover:bg-teal-400 hover:text-white bg-white text-black font-paragraph p-2 ml-2" href="{{ route('categories.index') }}">
+            <a class="border-2 rounded-md border-teal-600 hover:bg-teal-600 hover:text-white bg-white text-black  font-paragraph p-2 ml-2" href="{{ route('categories.index') }}">
                 Retour</a>
         </div>
         <div class="row mt-2 font-paragraph">
@@ -13,7 +13,7 @@
                     </div>
                 @endif
             </div>
-            <div class="col-lg-12 border-4 border-teal-400 p-4 rounded-xl bg-teal-800 text-white drop-shadow-2xl">
+            <div class="col-lg-12 p-4 bg-white text-black drop-shadow-2xl">
                 <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12 pb-5 border-b">
                         <div class="form-group">

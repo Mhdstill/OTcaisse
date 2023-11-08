@@ -2,7 +2,7 @@
     <div class="m-10">
         <div class="pb-8 flex justify-start items-center">
             
-            <a class="border-4 border-teal-400 hover:bg-teal-400 hover:text-white bg-white text-black font-paragraph p-2 ml-2" href="{{ route('categories.index') }}">
+            <a class="border-2 border-teal-600 rounded-sm hover:text-white hover:bg-teal-600 bg-white text-black font-paragraph p-2 ml-2" href="{{ route('categories.index') }}">
                 Retour</a>
         </div>
         <div class="row mt-2 font-paragraph">
@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                             <button type="submit"
-                                class="border-2 border-emerald-300 bg-white text-black hover:text-white hover:bg-emerald-300 p-3 px-5">Envoyer</button>
+                                class="border-2 border-teal-600 rounded-md bg-white text-black hover:text-white hover:bg-teal-600 p-3 px-5">Envoyer</button>
                         </div>
                     </div>
             </div>

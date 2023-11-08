@@ -1,10 +1,10 @@
 <x-app-layout>
     <header class="bg-white">
         <div class="max-w-7xl mx-auto py-4 px-2 sm:px-6 lg:px-8 flex items-center justify-between">
-            <h2 class="font-h1 text-4xl font-bold text-emerald-500 leading-tight">
+            <h2 class="font-h1 text-4xl font-bold text-teal-600 leading-tight">
                 Articles
             </h2>
-            <a class="border-2 border-emerald-300 bg-white text-black font-h1 font-bold p-2 hover:bg-emerald-300 hover:text-white"
+            <a class="border-2 rounded-md border-teal-600 bg-white text-black font-h1 font-bold p-2 hover:bg-teal-600 hover:text-white"
                 href="{{ route('articles.create') }}">
                 Créer un nouvel article</a>
         </div>
@@ -21,7 +21,7 @@
             </div>
             <div class="relative overflow-x-auto shadow-none overflow-auto p-2">
                 <table class="centered-table w-full text-sm text-left">
-                    <thead class="text-black sm:text-sm uppercase dark:bg-black dark:text-white">
+                    <thead class="text-black sm:text-sm uppercase dark:bg-teal-600 dark:text-white">
                         <tr>
                             <th scope="col" class="px-6 py-3 whitespace-normal">
                                 <div>
@@ -78,7 +78,7 @@
                     </thead>
                     <tbody>
                         @foreach ($articles as $article)
-                            <tr class="px-6 py-4 dark:bg-white dark:text-black">
+                            <tr class="px-6 py-4 dark:bg-white dark:text-black rounded-md">
                                 <td class="whitespace-normal">
                                     <img class="h-24 w-26 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
                                         src="{{ $article->image != null ? url('storage/' . $article->image) : url('img/andrew-small-unsplash.jpg') }}"

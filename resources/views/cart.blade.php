@@ -55,17 +55,17 @@
     <div name="options" class="flex justify-center items-center">
 
         <a href="{{ route('dashboard') }}"
-            class="border-teal-400 border-2 hover:bg-teal-400 text-black font-bold py-2 px-2 mr-4">
+            class="border-teal-400 rounded-md border-2 hover:bg-teal-400 text-black font-bold mr-4 py-2 px-4 mt-40">
             Ajouter d'autres articles
         </a>
 
-        <form method="POST" action="{{ route('confirmPurchase') }}" class="ml-10" id="confirmPurchaseForm">
+        <form method="POST" action="{{ route('confirmPurchase') }}" class="ml-2" id="confirmPurchaseForm">
             @csrf
-            <div name="moneycomestomama" class="flex flex-col items-center">
+            <div name="moneycomestomama" class="flex flex-col items-center ml-2">
                 <div name="grandtotal">
                     <div class="px-12 py-4">
                         <span class="text-xl font-bold text-red-600">Total de la commande:</span>
-                        <span id="total_price" class="text-xl font-bold ml-2 text-red-600">
+                        <span id="total_price" class="text-xl font-bold text-red-600">
                             {{ $selectedArticles->sum(function ($article) {return $article->price * 1;}) }} €
                         </span>
                     </div>
@@ -75,16 +75,16 @@
 
                 <div name="moyenspaiement"></div>
                 <span class="text-lg font-bold">Méthode de paiement :</span>
-                <div class="mt-4 ml-12 p-2">
-                    <label><input type="checkbox" class='border-2' name="payment_method[]" value="cb"> Carte
+                <div class="mt-2 ml-12 p-2">
+                    <label><input type="checkbox" class='rounded-xl border-2' name="payment_method[]" value="cb"> Carte
                         bancaire</label>
-                    <label><input type="checkbox" class='border-2' name="payment_method[]" value="especes">
+                    <label><input type="checkbox" class='rounded-xl border-2' name="payment_method[]" value="especes">
                         Espèces</label>
-                    <label><input type="checkbox" class='border-2' name="payment_method[]" value="chq">
+                    <label><input type="checkbox" class='rounded-xl border-2' name="payment_method[]" value="chq">
                         Chèque</label>
                 </div>
                 <div id="payment_options" class="flex justify-center items-center" style="display: none;">
-                    <div class="mt-4 ml-12 p-4">
+                    <div class="mt-2 ml-12 p-4">
                         <label for="amount_cb">Montant CB :</label>
                         <input type="number" name="amount_cb" id="amount_cb" class="w-24 border-2">
                         <input type="text" name="comment_cb" id="comment_cb" placeholder="Commentaire-CB"
@@ -106,7 +106,7 @@
             </div>
 
             <button id="confirmPurchaseBtn" type="submit"
-                class="border-teal-400 border-2 hover:bg-teal-400 text-black font-bold py-2 px-4">
+                class="border-teal-400 border-2 rounded-md hover:bg-teal-400 text-black font-bold py-2 px-4 mt-6">
                 Valider le panier
             </button>
         </form>

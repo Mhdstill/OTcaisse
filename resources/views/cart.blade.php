@@ -104,11 +104,12 @@
                     </div>
                 </div>
             </div>
-
+            <div name="centerit" class="flex justify-center">
             <button id="confirmPurchaseBtn" type="submit"
-                class="border-teal-400 border-2 rounded-md hover:bg-teal-400 text-black font-bold py-2 px-4 mt-6">
+                class="border-teal-400 border-2 rounded-md hover:bg-teal-400 text-black font-bold py-2 px-4 mt-2 md:mt-24">
                 Valider le panier
             </button>
+        </div>
         </form>
 
     </div>

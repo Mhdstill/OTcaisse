@@ -3,7 +3,7 @@
         @csrf
         <div class="max-w-none mx-auto gap-4 space-y-1 font-paragraph">
             @foreach ($categories as $category)
-                <div class="flex items-center p-2 gap-4" style="background-color: {{ $category->color }}">
+                <div class="flex flex-col md:flex-row items-center p-2 gap-4" style="background-color: {{ $category->color }}">
                     <div class="font-semibold text-xl">
                         {{ $category->name }}
                     </div>

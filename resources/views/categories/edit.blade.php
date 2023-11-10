@@ -1,11 +1,11 @@
 <x-app-layout>
-    <div class="m-10">
+    <div class="m-4 sm:m-10">
         <div class="pb-8 flex justify-start items-center">
                 <a class="border-2 rounded-md border-teal-600 bg-white text-black hover:bg-teal-600 hover:text-white font-paragraph p-2 ml-2" href="{{ route('categories.index') }}">
                 Retour</a>
         </div>
         <div class="row mt-2 font-paragraph">
-            <div class="col-lg-12 italic pb-4 text-red-700 font-bold">
+            <div class="col-lg-12 italic pb-4 text-black font-bold">
                 @if ($message = Session::get('success'))
                     <div class="alert alert-success">
                         <p>{{ $message }}</p>
@@ -26,7 +26,7 @@
                         <form action="{{ route('categories.update', $category->id) }}" method="POST">
                             @csrf
                             @method('PUT')
-                              <div class="row">
+                              <div class="grid grid-cols-1 gap-4">
                         <div class="col-xs-12 col-sm-12 col-md-12 pb-5">
                             <label class="font-bold text-lg">Nom:</label>
                             <div class="form-group text-black">

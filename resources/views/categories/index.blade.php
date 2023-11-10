@@ -5,7 +5,7 @@
             <h2 class="font-h1 text-4xl font-bold text-teal-600 leading-tight">
                 Catégories
             </h2>
-            <a class="border-2 border-teal-600 rounded-md bg-white text-black font-h1 font-bold p-2 hover:bg-teal-600 hover:text-white"
+            <a class="border-2 border-teal-600 rounded-md bg-white text-black font-h1 font-bold p-2 hover:bg-teal-600 hover:text-white mt-4 sm:mt-0"
                 href="{{ route('categories.create') }}">
                 Créer une nouvelle catégorie</a>
         </div>

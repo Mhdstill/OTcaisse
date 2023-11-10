@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="m-10">
+    <div class="m-4 sm:m-10">
         <div class="pb-8 flex justify-start items-center">
 
             <a class="border-2 rounded-md border-teal-600 hover:bg-teal-600 hover:text-white bg-white text-black  font-paragraph p-2 ml-2" href="{{ route('categories.index') }}">
@@ -14,7 +14,7 @@
                 @endif
             </div>
             <div class="col-lg-12 p-4 bg-white text-black drop-shadow-2xl">
-                <div class="row">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="col-xs-12 col-sm-12 col-md-12 pb-5 border-b">
                         <div class="form-group">
                             <label class="font-bold text-lg">Nom :</label><br>

@@ -1,10 +1,10 @@
 <x-app-layout>
     <header class="bg-white">
-        <div class="max-w-7xl mx-auto py-4 px-2 sm:px-6 lg:px-8 flex items-center justify-between">
+        <div class="max-w-7xl mx-auto py-4 px-2 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between">
             <h2 class="font-h1 text-4xl font-bold text-teal-600 leading-tight">
                 Articles
             </h2>
-            <a class="border-2 rounded-md border-teal-600 bg-white text-black font-h1 font-bold p-2 hover:bg-teal-600 hover:text-white"
+            <a class="border-2 rounded-md border-teal-600 bg-white text-black font-h1 font-bold p-2 hover:bg-teal-600 hover:text-white mt-4 sm:mt-0"
                 href="{{ route('articles.create') }}">
                 Créer un nouvel article</a>
         </div>

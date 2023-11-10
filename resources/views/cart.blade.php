@@ -52,10 +52,10 @@
     </div>
 
 
-    <div name="options" class="flex justify-center items-center">
+    <div name="options" class="flex flex-col md:flew-row justify-center items-center">
 
         <a href="{{ route('dashboard') }}"
-            class="border-teal-400 rounded-md border-2 hover:bg-teal-400 text-black font-bold mr-4 py-2 px-4 mt-40">
+            class="border-teal-400 rounded-md border-2 hover:bg-teal-400 text-black font-bold mr-4 py-2 px-4 mt-10 md:mt-40">
             Ajouter d'autres articles
         </a>
 
@@ -74,7 +74,7 @@
 
 
                 <div name="moyenspaiement"></div>
-                <span class="text-lg font-bold">Méthode de paiement :</span>
+                <span class="text-lg font-bold flex flex-wrap">Méthode de paiement :</span>
                 <div class="mt-2 ml-12 p-2">
                     <label><input type="checkbox" class='rounded-xl border-2' name="payment_method[]" value="cb"> Carte
                         bancaire</label>
@@ -83,7 +83,7 @@
                     <label><input type="checkbox" class='rounded-xl border-2' name="payment_method[]" value="chq">
                         Chèque</label>
                 </div>
-                <div id="payment_options" class="flex justify-center items-center" style="display: none;">
+                <div id="payment_options" class="flex flex-col md:flew-row justify-center items-center" style="display: none;">
                     <div class="mt-2 ml-12 p-4">
                         <label for="amount_cb">Montant CB :</label>
                         <input type="number" name="amount_cb" id="amount_cb" class="w-24 border-2">

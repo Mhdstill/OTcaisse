@@ -31,8 +31,6 @@ Route::middleware([
     Route::post('/confirmpurchase', [SellController::class, 'confirmPurchase'])->name('confirmPurchase');
     Route::get('/cart', [SellController::class, 'cart'])->name('cart');
 
-    // Statistics routes
-    Route::get('/statistics', [SellController::class, 'statistics'])->name('statistics');
 });
 
 
@@ -47,3 +45,7 @@ Route::middleware([
 // edit affiche le formulaire de modification d'une vente existante.
 // update met à jour une vente existante dans la base de données à partir des données du formulaire.
 // destroy supprime une vente de la base de données.
+
+
+ // Statistics routes
+//  Route::get('/statistics', [SellController::class, 'statistics'])->name('statistics');

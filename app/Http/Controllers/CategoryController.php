@@ -43,7 +43,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
         $articles = Article::all();
-        return view('categories.create', compact('categories', 'articles'));
+        return response()->view('categories.create', compact('categories', 'articles'));
     }
 
     /**
@@ -64,7 +64,7 @@ class CategoryController extends Controller
             
        Category::create($validData);
         return redirect()->route('categories.index')
-            ->with('success','Catégorie créé avec succès !');
+            ->with('success','Catégorie créée avec succès !');
 
     }
 

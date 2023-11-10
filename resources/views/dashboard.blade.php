@@ -14,11 +14,11 @@
                                     class="bg-white rounded-md shadow-xl hover:shadow flex items-center justify-between p-2 transition-all duration-300 hover:scale-95">
                                     <input type="checkbox" class='rounded-xl border-2' name="selected_articles[]"
                                         value="{{ $article->id }}">
-                                    {{-- <div class="">
-                                        <img class="h-24 w-24 object-cover rounded-full {{ $article->status == 'actif' ? '' : 'grayscale' }}"
+                                    <div class="">
+                                        <img class="h-24 w-24 object-cover {{ $article->status == 'actif' ? '' : 'grayscale' }}"
                                              src="{{ $article->image != null ? url('storage/' . $article->image) : url('img/andrew-small-unsplash.jpg') }}"
                                              alt="">
-                                    </div> --}}
+                                    </div>
                                     <div class="flex flex-col gap-1 items-center justify-center text-center">
                                         <div class="flex flex-col">
                                             <span class="font-semibold text-sm">{{ $article->title }}</span>

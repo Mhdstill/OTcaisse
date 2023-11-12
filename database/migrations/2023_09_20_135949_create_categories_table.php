@@ -29,3 +29,13 @@ return new class extends Migration
         Schema::dropIfExists('categories');
     }
 };
+
+// CREATE TABLE categories (
+//     id INT PRIMARY KEY AUTO_INCREMENT,
+//     name VARCHAR(255) UNIQUE,
+//     color VARCHAR(30),
+//     description TEXT,
+//     status ENUM('actif', 'inactif') DEFAULT 'actif',
+//     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+// );

@@ -34,3 +34,19 @@ return new class extends Migration
         Schema::dropIfExists('articles');
     }
 };
+
+// CREATE TABLE articles (
+//     id INT PRIMARY KEY AUTO_INCREMENT,
+//     title VARCHAR(255) UNIQUE,
+//     price DECIMAL(10, 2),
+//     quantity INT DEFAULT 0,
+//     quantity_alert INT DEFAULT 10,
+//     category_id INT,
+//     image VARCHAR(255),
+//     description TEXT,
+//     reference VARCHAR(255),
+//     status ENUM('actif', 'inactif') DEFAULT 'actif',
+//     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+//     FOREIGN KEY (category_id) REFERENCES categories(id)
+// );

@@ -23,7 +23,7 @@ class CategoryController extends Controller
         ];
     }
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. Method GET
      *
      * @return \Illuminate\Http\Response
      */

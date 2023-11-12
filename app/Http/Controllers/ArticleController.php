@@ -70,6 +70,8 @@ class ArticleController extends Controller
         $categories = Category::all();
         return view('articles.edit',compact('article','categories'));
     }
+ 
+
 
     //Mettre à jour la ressource spécifiée dans le stockage
     public function update(Request $request, Article $article)
@@ -97,3 +99,25 @@ class ArticleController extends Controller
     }
 
 }
+
+
+// -- Public function update : Mettre à jour l'article spécifique avec les données validées
+// UPDATE articles SET
+//     title = {validData_title},
+//     price = {validData_price},
+//     quantity = {validData_quantity},
+//     quantity_alert = {validData_quantity_alert},
+//     category_id = {validData_category_id},
+//     image = {validData_image},
+//     description = {validData_description},
+//     reference = {validData_reference},
+//     status = {validData_status},
+//     updated_at = {current_timestamp}
+// WHERE id = {article_id};
+
+//     public function Edit mais traduite en sql:
+//     -- Récupérer un article spécifique
+// SELECT * FROM articles WHERE id = {article_id};
+
+// -- Récupérer toutes les catégories
+// SELECT * FROM categories;

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('article_id');
             $table->integer('quantity');
             $table->decimal('price', 15, 2);
-            $table->enum('payment_method',['cb','especes','chq']);
             $table->enum('status',['active','done'])->default('active');
             $table->text('commentary')->nullable();
             $table->timestamps();

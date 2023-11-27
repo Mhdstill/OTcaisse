@@ -31,7 +31,7 @@
     </header>
     <main class="bg-white bg-opacity-40 max-w-lg mx-auto p-8 md:p-12 my-10 rounded-lg shadow-2xl">
         <section class='flex flex-items'>
-            <img src="{{ asset('../img/cashier.png') }}" class="w-16 h-16 ml-4">
+            <img src="{{ asset('..img/cashier.png') }}" class="w-16 h-16 ml-4">
             <h3 class="font-bold text-2xl ml-12 mt-4">Gestion des ventes</h3>
         </section>
 

@@ -116,7 +116,13 @@ public function confirmPurchase(Request $request)
                 $request->input('amount_chq');
                 $request->input('comment_chq');
 
-
+                $validator = Validator::make($request->all(), [
+                    'amount_' . $method => 'required|numeric|between:0.00,99.99',
+                ]);
+         
+                if ($validator->fails()) {
+                    return redirect()->route('cart')->withErrors($validator)->withInput();
+                }
 
                 if ($amount > 0) {
                     $payment = new Payment;

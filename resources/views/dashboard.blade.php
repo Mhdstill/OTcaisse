@@ -16,7 +16,7 @@
                                         value="{{ $article->id }}">
                                         <div class="">
                                             <img class="h-24 w-24 object-cover {{ $article->status == 'actif' ? '' : 'grayscale' }}"
-                                                 src="{{ $article->image != null ? url('storage/app/public/img' . $article->image) : url('storage/app/public/img/andrew-small-unsplash.jpg') }}"
+                                                 src="{{ $article->image != null ? url('..app/public/img' . $article->image) : url('..app/public/img/andrew-small-unsplash.jpg') }}"
                                                  alt="">
                                         </div>
                                     <div class="flex flex-col gap-1 items-center justify-center text-center">

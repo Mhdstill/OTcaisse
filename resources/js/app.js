@@ -1,5 +1,6 @@
 import './bootstrap';
 
+
 //cart blade php
         // function removeFromCart(articleId) {
         //     var xhr = new XMLHttpRequest();

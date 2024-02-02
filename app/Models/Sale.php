@@ -20,10 +20,14 @@ class Sale extends Model
     ];
 
     public function payments()
-{
-    return $this->hasMany(Payment::class);
-}
+    {
+        return $this->hasMany(Payment::class);
+    }
 
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
 }
 
 // one-to-many relationship between sales and payments.

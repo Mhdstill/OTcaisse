@@ -14,6 +14,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    Route::get('/ventes', [SellController::class, 'list'])->name('ventes');
     Route::get('/caisse', [SellController::class, 'index'])->name('dashboard');
 
     Route::resource('articles', ArticleController::class);

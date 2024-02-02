@@ -16,8 +16,27 @@ class SellController extends Controller
     public function index()
     {
         $categories = Category::with('articles')->get();
+
+        $articles = Article::all();
+        if (!session()->has('stock_alert_shown')) {
+            foreach($articles as $article) {
+                if ($article->quantity <= $article->quantity_alert) {
+                    session()->flash('message', 'L\'article ' . $article->title . ' a atteint le stock d\'alerte.');
+                    session()->put('stock_alert_shown', true);
+                    break; 
+                }
+            }
+        }
+    
         return view('dashboard', compact('categories'));
     }
+
+    public function list()
+    {
+        $sales = Sale::all();
+        return view('sales_list', compact('sales'));
+    }
+
 
     public function create(Article $article)
     {
@@ -107,7 +126,7 @@ public function confirmPurchase(Request $request)
             // Handle payment methods
             $paymentMethods = $request->input('payment_method');
             foreach ($paymentMethods as $method) {
-                $amount = $request->input('amount_' . $method);
+                $amount = (float) $request->input('amount_' . $method);
                 $comment = $request->input('comment_' . $method);
                 $request->input('amount_cb');
                 $request->input('comment_cb');
@@ -116,13 +135,14 @@ public function confirmPurchase(Request $request)
                 $request->input('amount_chq');
                 $request->input('comment_chq');
 
+                /*
                 $validator = Validator::make($request->all(), [
                     'amount_' . $method => 'required|numeric|between:0.00,99.99',
                 ]);
-         
+        
                 if ($validator->fails()) {
                     return redirect()->route('cart')->withErrors($validator)->withInput();
-                }
+                }*/
 
                 if ($amount > 0) {
                     $payment = new Payment;

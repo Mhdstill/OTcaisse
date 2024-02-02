@@ -18,6 +18,10 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
+        @if(Session::has('message'))
+        <p style="font-weight: bold; color: white; text-align: center; background-color: #D32F2F;">{{ Session::get('message') }}</p>
+        @endif
+
         <x-banner />
 
         <div class="min-h-screen bg-white">

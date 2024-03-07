@@ -1,12 +1,18 @@
 <x-app-layout>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <header class="bg-white">
         <div class="max-w-7xl mx-auto py-4 px-2 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between">
             <h2 class="font-h1 text-4xl font-bold text-teal-600 leading-tight">
                 Ventes
             </h2>
-            <button class="border-2 rounded-md border-teal-600 bg-white text-black font-h1 font-bold p-2 hover:bg-teal-600 hover:text-white mt-4 sm:mt-0" onclick="exportTableToExcel('sale_table')">
-                Exporter
-            </button>
+            <div class="date-filters">
+                <input type="text" id="startDate" class="date-input" placeholder="Date de début">
+                <input type="text" id="endDate" class="date-input" placeholder="Date de fin">
+                <button class="border-2 rounded-md border-teal-600 bg-white text-black font-h1 font-bold p-2 hover:bg-teal-600 hover:text-white mt-4 sm:mt-0" onclick="exportTableToExcel('sale_table')">Exporter</button>
+            </div>
+
         </div>
     </header>
     <div class="m-4">
@@ -58,6 +64,11 @@
                                     Commentaire
                                 </div>
                             </th>
+                            <th scope="col" class="px-6 py-3 whitespace-normal">
+                                <div>
+                                    Date de création
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,6 +87,7 @@
                             </td>
                             <td class="px-4 py-4">{{ $sell->status }}</td>
                             <td class="px-4 py-4">{{ $sell->commentary }}</td>
+                            <td class="px-4 py-4">{{ \Carbon\Carbon::parse($sell->created_at)->format('d/m/Y') }}</td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -98,6 +110,43 @@
             /* Génère le fichier XLSX et le télécharge */
             XLSX.writeFile(wb, filename ? filename : 'export.xlsx');
         }
+    </script>
+
+
+    <script>
+        flatpickr("#startDate", {});
+        flatpickr("#endDate", {});
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startDateInput = document.getElementById('startDate');
+            const endDateInput = document.getElementById('endDate');
+
+            function filterTable() {
+                const startDate = startDateInput.value ? new Date(startDateInput.value) : null;
+                const endDate = endDateInput.value ? new Date(endDateInput.value) : null;
+                endDate && endDate.setHours(23, 59, 59, 999); // Inclure la fin de la journée
+
+                document.querySelectorAll('#sale_table tbody tr').forEach(row => {
+                    const dateText = row.cells[7].textContent; // Assurez-vous que c'est la bonne colonne pour la date
+                    const rowDate = dateText ? new Date(dateText.split('/').reverse().join('-')) : null;
+
+                    if (startDate && endDate) {
+                        if (rowDate >= startDate && rowDate <= endDate) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
+                    } else {
+                        row.style.display = '';
+                    }
+                });
+            }
+
+            startDateInput.addEventListener('change', filterTable);
+            endDateInput.addEventListener('change', filterTable);
+        });
     </script>
 
 
